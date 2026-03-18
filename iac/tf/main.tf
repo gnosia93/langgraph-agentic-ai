@@ -187,12 +187,12 @@ resource "aws_instance" "gpu_box" {
     volume_type = "gp3" # 최신 gp3 볼륨 타입 사용
   }
 
-  user_data = user_data_base64(templatefile("${path.module}/userdata.sh", {
+  user_data_base64 = base64encode(templatefile("${path.module}/userdata.sh", {
     vscode_password = var.vscode_password
   }))
 
   tags = {
-    Name = "gpu-code-server"
+    Name = "gpu-vscode"
   }
 }
 
