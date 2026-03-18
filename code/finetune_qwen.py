@@ -13,8 +13,15 @@ from peft import LoraConfig, get_peft_model
 from trl import SFTTrainer
 
 # ============================================================
-# 1. 모델 로드 (4bit 양자화)
+# 1. 모델 로드 
 # ============================================================
+
+# === 양자화 설정 (택 1) ===
+# 4bit: ~13 GiB
+# bnb_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True)
+# 8bit: ~25 GiB
+# bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+# BF16: ~50 GiB (양자화 없음, 품질 최고)
 model_name = "Qwen/Qwen3.5-27B"
 
 # 4bit 양자화
