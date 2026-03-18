@@ -9,7 +9,7 @@ Qwen3.5 (2026년 2월):
   - 201개 언어
 ```
 
-## 1. LLM Benchmark (범용 밴치마크) ##
+## 1. General Benchmark (범용 밴치마크) ##
 * https://github.com/EleutherAI/lm-evaluation-harness
 ```
 pip install lm-eval
@@ -120,6 +120,12 @@ print(result)
 프로덕션에서는 사용자 요청과 LLM 응답을 로깅하고, 로그중 일부를 샘플링하여 비동기로 백그라운드에서 LLM Judge를 돌리고, 결과를 Prometheus 메트릭으로 수집하는 방식으로 운영.
 * 도구: MT-Bench, AlpacaEval, G-Eval, 직접 구현
 * 방식: Single Rating, Pairwise Comparison, Reference-based
+
+
+## 4. 추론 성능 (Inference Performance) ##
+- Throughput: 초당 처리 토큰 수 (tokens/sec)
+- Latency: 첫 토큰까지 시간 (TTFT), 토큰 간 시간 (TBT)
+- 동시 처리: 동시 요청 수 대비 처리량
 
 ## 레퍼런스 ##
 * https://artificialanalysis.ai/leaderboards/models
