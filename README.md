@@ -1,8 +1,6 @@
 # Agentic AI On EKS 
 
-### Developement ###
-
-* [1. 환경설정하기](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/1.start.md)
+* [1. 노트북 환경 설정](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/1.start.md)
 
 * [2. LLM 평가하기](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/2-llm-eval.md)
 
