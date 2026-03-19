@@ -8,9 +8,9 @@
 
 * [4. RAG 설계](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/4-rag.md)
 
-6. Nvidia Dyamo 설치
+5. 배포 파이프라인 구성 
 
-7. 배포 파이프라인 구성 
+* [9. Post Training](https://github.com/gnosia93/infer-on-eks/blob/main/lesson/5-post-training.md)
 
 
 
@@ -28,8 +28,6 @@
   - [로컬 Docker 배포하기](https://github.com/gnosia93/interence-on-eks/blob/main/lesson/4-dynamo-docker.md) 
   - [EKS 배포하기](https://github.com/gnosia93/interence-on-eks/blob/main/lesson/4-dynamo-eks.md) 
 
-* [5. Post Training](https://github.com/gnosia93/infer-on-eks/blob/main/lesson/5-post-training.md)
- 
     
 
 ## 레퍼런스 ##
