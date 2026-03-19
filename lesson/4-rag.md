@@ -63,7 +63,7 @@ for score, doc in ranked[:3]:
 ### 2. 임베딩 모델 선정 ###
 
 #### 1단계: MTEB 리더보드에서 후보 선정 ####
-[MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)에서 Retrieval 태스크 기준 상위 모델을 확인한다. 
+[MTEB(Messaive Text Embedding Benchmark) Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)에서 Retrieval 태스크 기준 상위 모델을 확인한다. 
 
 
 
