@@ -217,7 +217,7 @@ if __name__ == "__main__":
 ```
 
 * LangGraph에서 MCP 도구 호출(stdio 방식)
-```
+```python
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
