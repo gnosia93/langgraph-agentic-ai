@@ -1,10 +1,12 @@
-* 셀 1: 설치
+reranker 를 호출하는 RAG 파이프라인으로 vscode 에서 아래 코드를 실행한다.
+
+* [셀 1] 설치
 ```python
 !pip install langgraph langchain langchain-openai langchain-community \
 faiss-cpu sentence-transformers
 ```
 
-* 셀 2: LangGraph 구성
+* [셀 2] LangGraph 구성
 ```python
 from typing import TypedDict
 from langgraph.graph import StateGraph, START, END
@@ -70,13 +72,13 @@ graph_builder.add_edge("retrieve", "rerank")
 graph_builder.add_edge("rerank", "generate")
 graph_builder.add_edge("generate", END)
 
-graph = graph_builder.compile()
+agent = graph_builder.compile()
 ```
 
-* 셀 3: 직접 실행
+* [셀 3] 직접 실행
 ```
 # FastAPI 없이 그래프 직접 호출
-result = await graph.ainvoke({"question": "RAG가 뭐야?"})
+result = await agent.ainvoke({"question": "RAG가 뭐야?"})
 
 print("답변:", result["answer"])
 print("\n출처:")
