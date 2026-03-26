@@ -76,4 +76,75 @@ graph TB
     style GPU fill:#51cf66,color:#fff
     style HBM fill:#ff6b6b,color:#fff
 ```
+```mermaid
+graph TB
+    subgraph OPT1["1. 메모리 레이아웃 최적화"]
+        direction LR
+        subgraph BEFORE1["Before: Column-major로 행 읽기"]
+            B1_HBM["HBM: [1, 5, 9, 13, 2, 6, 10, 14, 3, ...]"]
+            B1_R1["읽기1 → 1"]
+            B1_R2["읽기2 → 2"]
+            B1_R3["읽기3 → 3"]
+            B1_R4["읽기4 → 4"]
+            B1_RESULT["HBM 접근 4번 ❌"]
+            B1_HBM --> B1_R1 --> B1_R2 --> B1_R3 --> B1_R4 --> B1_RESULT
+        end
+        subgraph AFTER1["After: Row-major로 행 읽기"]
+            A1_HBM["HBM: [1, 2, 3, 4, 5, 6, 7, 8, ...]"]
+            A1_R1["읽기1 → 1,2,3,4 한 번에"]
+            A1_RESULT["HBM 접근 1번 ✅"]
+            A1_HBM --> A1_R1 --> A1_RESULT
+        end
+    end
+
+    subgraph OPT2["2. 패딩 최적화 (128B 경계 정렬)"]
+        direction LR
+        subgraph BEFORE2["Before: 경계 안 맞음"]
+            B2_HBM["HBM: [텐서A 100B][텐서B...]"]
+            B2_READ["텐서B 시작이 128B 경계 밖"]
+            B2_RESULT["HBM 접근 2번 ❌"]
+            B2_HBM --> B2_READ --> B2_RESULT
+        end
+        subgraph AFTER2["After: 패딩으로 정렬"]
+            A2_HBM["HBM: [텐서A 100B + 패딩 28B][텐서B...]"]
+            A2_READ["텐서B 시작이 128B 경계에 딱 맞음"]
+            A2_RESULT["HBM 접근 1번 ✅"]
+            A2_HBM --> A2_READ --> A2_RESULT
+        end
+    end
+
+    subgraph OPT3["3. 커널 퓨전"]
+        direction LR
+        subgraph BEFORE3["Before: 커널 3개 따로"]
+            B3_R1["HBM → 읽기"]
+            B3_K1["MatMul"]
+            B3_W1["HBM ← 쓰기"]
+            B3_R2["HBM → 읽기"]
+            B3_K2["LayerNorm"]
+            B3_W2["HBM ← 쓰기"]
+            B3_R3["HBM → 읽기"]
+            B3_K3["Activation"]
+            B3_W3["HBM ← 쓰기"]
+            B3_RESULT["HBM 접근 6번 ❌"]
+            B3_R1 --> B3_K1 --> B3_W1 --> B3_R2 --> B3_K2 --> B3_W2 --> B3_R3 --> B3_K3 --> B3_W3 --> B3_RESULT
+        end
+        subgraph AFTER3["After: 커널 1개로 퓨전"]
+            A3_R1["HBM → 읽기"]
+            A3_FUSED["MatMul + LayerNorm + Activation<br/>(중간 결과는 레지스터/캐시)"]
+            A3_W1["HBM ← 쓰기"]
+            A3_RESULT["HBM 접근 2번 ✅"]
+            A3_R1 --> A3_FUSED --> A3_W1 --> A3_RESULT
+        end
+    end
+
+    style OPT1 fill:#4a9eff,color:#fff
+    style OPT2 fill:#cc5de8,color:#fff
+    style OPT3 fill:#51cf66,color:#fff
+    style BEFORE1 fill:#ff6b6b,color:#fff
+    style BEFORE2 fill:#ff6b6b,color:#fff
+    style BEFORE3 fill:#ff6b6b,color:#fff
+    style AFTER1 fill:#51cf66,color:#fff
+    style AFTER2 fill:#51cf66,color:#fff
+    style AFTER3 fill:#51cf66,color:#fff
+```
 
