@@ -32,7 +32,7 @@
 
 * [TensorRT-LLM 연산최적화](https://github.com/gnosia93/infer-on-eks/blob/main/lesson/a1-tensorrt-llm.md)
 * [Prometheus/Loki Stack](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/a2-prometheus-loki.md)   
-
+* [쿠버네티스 이벤트]()
 
 ### todo ###
 * 각각의 모듈에 대해서 도커를 만들어서 ecr 에 푸시한다.
