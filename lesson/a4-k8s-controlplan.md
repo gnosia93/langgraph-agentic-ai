@@ -40,12 +40,12 @@ etcdctl endpoint health
 ### 대규모에서 주의할 메트릭 ###
 * API Server 응답 지연 (느려지면 클러스터 전체 느려짐)
 
-histogram_quantile(0.99, rate(apiserver_request_duration_seconds_bucket[5m]))
+  histogram_quantile(0.99, rate(apiserver_request_duration_seconds_bucket[5m]))
 
 * etcd 쓰기 지연 (10ms 넘으면 위험)
 
-histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m]))
+  histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m]))
 
 * 스케줄링 지연
 
-scheduler_scheduling_duration_seconds
+  scheduler_scheduling_duration_seconds
