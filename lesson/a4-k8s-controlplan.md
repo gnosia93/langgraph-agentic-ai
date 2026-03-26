@@ -24,7 +24,7 @@ scheduler_scheduling_duration_seconds # 스케줄링 소요 시간
 ```
 
 
-#### 온프렘 ####
+### 온프램 ###
 ```
 # 직접 로그 확인
 journalctl -u kube-apiserver
