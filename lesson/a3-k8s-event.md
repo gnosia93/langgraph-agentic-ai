@@ -92,3 +92,21 @@ kubectl get pods -n monitoring -l app.kubernetes.io/name=kubernetes-event-export
 # 2. stdout으로 이벤트가 잘 들어오는지 로그 확인 (json 형태로 막 올라오면 성공!)
 kubectl logs -f -n monitoring -l app.kubernetes.io/name=kubernetes-event-exporter
 ```
+
+### LogQL 예시 ###
+```
+# 해당 클러스터의 모든 이벤트
+{app="kubernetes-event-exporter", cluster_name="ai-gpu-cluster"}
+
+# GPU 스케줄링 실패
+{app="kubernetes-event-exporter", cluster_name="ai-gpu-cluster"} |= "FailedScheduling"
+
+# OOM kill
+{app="kubernetes-event-exporter", cluster_name="ai-gpu-cluster"} |= "OOMKilled"
+
+# 노드 장애
+{app="kubernetes-event-exporter", cluster_name="ai-gpu-cluster"} |= "NodeNotReady"
+
+# Warning 이벤트 건수 (시간별)
+count_over_time({app="kubernetes-event-exporter", cluster_name="ai-gpu-cluster"} |= "Warning" [1h])
+```
