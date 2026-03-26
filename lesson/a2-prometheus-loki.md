@@ -63,6 +63,33 @@ Step 200: loss=2.12, time=0.150s  → 131072/0.150 = 0.87M tokens/sec ← 느려
 >[!NOTE]
 >Prometheus 메트릭은 메모리에 값만 저장해두고, Prometheus Scraper 가 15초마다 한 번 HTTP로 가져가는 구조라서 부하가 거의 없다.
 
+
+## 프로메테우스 샤딩 ##
+아래는 샤딩 관련 사이징 예시이다. 정확한 값은 측정이 필요하다.
+```
+DCGM Exporter: GPU당 약 50~100개 메트릭
+Node Exporter: 노드당 약 500~1000개 메트릭
+스크래핑 주기: 15초
+
+노드당 메트릭 수 (8 GPU):
+  DCGM: 8 GPU × 100 = 800
+  Node: 1000
+  합계: ~1,800 메트릭/노드
+```
+
+단일 Prometheus 한계: 약 100만~200만 active time series
+* 100노드 (800 GPU):  ~180,000 시리즈 → 여유
+* 500노드 (4,000 GPU): ~900,000 시리즈 → 한계 근접
+* 1000노드 (8,000 GPU): ~1,800,000 시리즈 → Thanos 필요
+
+>[!NOTE]
+>대략 m5.4xlarge (64GB) 기준으로 500노드(GPU 4,000장) 정도가 단일 Prometheus의 한계로, 그 이상이면 Thanos나 Mimir로 샤딩이 필요하다.
+>Prometheus 병목은 메모리로, active time series를 전부 메모리에 올려놓는다. 메모리가 충분하고 DISK 성능이 받쳐준다면 단일 인스턴스로도 수천대의 노드를 커버할 수 있다.
+>단, 성능 테스트 후 구성해야 한다.
+
+
+
+
 ## LOKI ##
 Loki는 Grafana Labs가 만든 로그 수집/검색 시스템으로, "Prometheus의 로그 버전"이라고 불린다. 각 노드에 설치된 에이전트(Alloy/Promtail)가 syslog, 잡 로그, 커널 로그 등을 수집하고 라벨을 붙여서 Loki 서버로 전송하면, Loki는 라벨만 인덱싱하고 로그 본문은 압축 저장한다. 검색은 LogQL이라는 쿼리 언어를 사용하며, Grafana와 네이티브로 통합되어 Prometheus 메트릭과 Loki 로그를 같은 대시보드에서 시간축으로 겹쳐볼 수 있다. ELK(Elasticsearch) 대비 최대 강점은 비용인데, Elasticsearch는 로그 본문 전체를 인덱싱해서 디스크와 메모리를 많이 소비하는 반면, Loki는 라벨만 인덱싱하므로 대규모 클러스터에서 운영 비용이 훨씬 저렴하다. GPU 클러스터 1000대 규모에서 로그가 폭발적으로 늘어나는 환경에서는 Loki가 현실적인 선택이다.
 
@@ -163,26 +190,4 @@ compactor:
   retention_enabled: true
 ```
 
-## 프로메테우스 샤딩 ##
-아래는 샤딩 관련 사이징 예시이다. 정확한 값은 측정이 필요하다.
-```
-DCGM Exporter: GPU당 약 50~100개 메트릭
-Node Exporter: 노드당 약 500~1000개 메트릭
-스크래핑 주기: 15초
-
-노드당 메트릭 수 (8 GPU):
-  DCGM: 8 GPU × 100 = 800
-  Node: 1000
-  합계: ~1,800 메트릭/노드
-```
-
-단일 Prometheus 한계: 약 100만~200만 active time series
-* 100노드 (800 GPU):  ~180,000 시리즈 → 여유
-* 500노드 (4,000 GPU): ~900,000 시리즈 → 한계 근접
-* 1000노드 (8,000 GPU): ~1,800,000 시리즈 → Thanos 필요
-
->[!NOTE]
->대략 m5.4xlarge (64GB) 기준으로 500노드(GPU 4,000장) 정도가 단일 Prometheus의 한계로, 그 이상이면 Thanos나 Mimir로 샤딩이 필요하다.
->Prometheus 병목은 메모리로, active time series를 전부 메모리에 올려놓는다. 메모리가 충분하고 DISK 성능이 받쳐준다면 단일 인스턴스로도 수천대의 노드를 커버할 수 있다.
->단, 성능 테스트 후 구성해야 한다.
 
