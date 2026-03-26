@@ -1,7 +1,10 @@
-EKS (AWS 관리형)
-# Control Plane 로그 활성화 (CloudWatch로 전송)
+## EKS ##
+Control Plane 로그 활성화 (CloudWatch로 전송)
+```
 aws eks update-cluster-config --name my-cluster \
   --logging '{"clusterLogging":[{"types":["api","audit","authenticator","controllerManager","scheduler"],"enabled":true}]}'
+```
+```
 CloudWatch Log Groups:
   /aws/eks/my-cluster/cluster
     ├─ kube-apiserver-xxx        → API Server 로그
@@ -9,15 +12,20 @@ CloudWatch Log Groups:
     ├─ authenticator-xxx         → 인증 로그
     ├─ kube-controller-manager-xxx → Controller Manager 로그
     └─ kube-scheduler-xxx        → Scheduler 로그
-API Server 메트릭은 Prometheus로:
+```
 
-# kube-prometheus-stack 설치하면 자동 수집
+kube-prometheus-stack 설치하면 API Server 메트릭 Prometheus로 수집할 수 있다.
+```
 # API Server 메트릭 예시
 apiserver_request_total              # API 요청 수
 apiserver_request_duration_seconds   # API 응답 시간
 etcd_request_duration_seconds        # etcd 응답 시간
 scheduler_scheduling_duration_seconds # 스케줄링 소요 시간
-온프렘
+```
+
+
+#### 온프렘 ####
+```
 # 직접 로그 확인
 journalctl -u kube-apiserver
 journalctl -u kube-scheduler
@@ -27,7 +35,10 @@ journalctl -u etcd
 # etcd 성능 확인
 etcdctl endpoint status --write-out=table
 etcdctl endpoint health
-대규모에서 주의할 메트릭
+```
+
+### 대규모에서 주의할 메트릭 ###
+```
 # API Server 응답 지연 (느려지면 클러스터 전체 느려짐)
 histogram_quantile(0.99, rate(apiserver_request_duration_seconds_bucket[5m]))
 
@@ -37,3 +48,4 @@ histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m]))
 # 스케줄링 지연
 scheduler_scheduling_duration_seconds
 EKS에서는 Control Plane을 AWS가 관리하니까 로그만 켜두면 되고, 온프렘에서는 etcd 디스크 성능과 API Server 응답 시간을 직접 모니터링해야 합니다.
+```
