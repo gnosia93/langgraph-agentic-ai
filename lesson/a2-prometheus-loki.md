@@ -73,6 +73,21 @@ Loki는 Grafana Labs가 만든 로그 수집/검색 시스템으로, "Prometheus
 * Compactor    → 오래된 청크 압축/병합/삭제 
 * Store        → S3/GCS 같은 오브젝트 스토리지에 영구 저장 / 라벨 → 인덱스, 본문 → 압축 청크
 
+### LogQL 예시 ###
+그라파나 대시보드에서 LogQL을 이용하여 로그를 조회한다.
+```
+# 특정 노드의 Xid 에러
+{node="gpu-node-05"} |= "Xid"
+
+# OOM kill 로그
+{job="syslog"} |= "Out of memory"
+
+# 특정 잡의 NCCL 에러
+{job="slurm", jobid="12345"} |= "NCCL WARN"
+
+# 에러 로그
+{node=~"gpu-node-.*"} |= "error" | logfmt
+```
 
 ## 프로메테우스 샤딩 ##
 아래는 샤딩 관련 사이징 예시이다. 정확한 값은 측정이 필요하다.
