@@ -4,14 +4,14 @@ Control Plane 로그 활성화 (CloudWatch로 전송)
 aws eks update-cluster-config --name my-cluster \
   --logging '{"clusterLogging":[{"types":["api","audit","authenticator","controllerManager","scheduler"],"enabled":true}]}'
 ```
+CloudWatch 로그 그룹
 ```
-CloudWatch Log Groups:
-  /aws/eks/my-cluster/cluster
-    ├─ kube-apiserver-xxx        → API Server 로그
-    ├─ kube-audit-xxx            → 감사 로그 (누가 뭘 했는지)
-    ├─ authenticator-xxx         → 인증 로그
-    ├─ kube-controller-manager-xxx → Controller Manager 로그
-    └─ kube-scheduler-xxx        → Scheduler 로그
+/aws/eks/my-cluster/cluster
+  ├─ kube-apiserver-xxx        → API Server 로그
+  ├─ kube-audit-xxx            → 감사 로그 (누가 뭘 했는지)
+  ├─ authenticator-xxx         → 인증 로그
+  ├─ kube-controller-manager-xxx → Controller Manager 로그
+  └─ kube-scheduler-xxx        → Scheduler 로그
 ```
 
 kube-prometheus-stack 설치하면 API Server 메트릭 Prometheus로 수집할 수 있다.
