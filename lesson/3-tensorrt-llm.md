@@ -57,3 +57,23 @@ if __name__ == '__main__':
     main()
 ```
 
+```mermaid
+graph TB
+    subgraph GPU["GPU 내부"]
+        SM["SM (연산 코어)<br/>연산 속도: 매우 빠름"]
+        CACHE["L2 Cache / 레지스터<br/>용량 작음, 속도 빠름"]
+    end
+
+    subgraph HBM["HBM (GPU 메모리)"]
+        DATA["텐서 데이터<br/>용량 큼, 속도 느림 (병목)"]
+    end
+
+    DATA -->|"읽기 (병목)"| CACHE
+    CACHE -->|"연산"| SM
+    SM -->|"결과"| CACHE
+    CACHE -->|"쓰기 (병목)"| DATA
+
+    style GPU fill:#51cf66,color:#fff
+    style HBM fill:#ff6b6b,color:#fff
+```
+
