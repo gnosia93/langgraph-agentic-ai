@@ -40,6 +40,12 @@
 * gitlab 과 연동하여 코드 repo 를 만들고 ci/cd 
 * appendix 내용을 어떻게 워크샵에 잘 녹여낼지 고민이 필요
 * agentic ai 에 대한 어플리케이션 개발 부터 open source 기반의 LLM serving infra 까지 어떻게 잘 녹여내야 한다.
+* vLLM, TensorRT-LLM, SGLang 등 추론 서빙 엔진 / 추론 최적화 
+* KV Cache 최적화, Prefill/Decode 분리, Continuous Batching, Speculative Decoding
+* 에이전트 오케스트레이션, 하네스 엔지니어링
+* 장시간 실행되는 에이전트의 상태 관리, 복구, 모니터링
+* LangGraph / LangGraph.
+  
      
 ## 레퍼런스 ##
 
