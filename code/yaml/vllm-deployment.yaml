@@ -60,7 +60,7 @@ spec:
         - name: shm
           emptyDir:
             medium: Memory
-            sizeLimit: 2Gi                        # 통신 토폴로지 정보 (어떤 GPU가 어떤 경로로 연결됐는지), 동기화 플래그 (all-reduce 시작/완료 신호), 임시 버퍼 (작은 메시지 전달)
+            sizeLimit: 16Gi                        # 통신 토폴로지 정보 (어떤 GPU가 어떤 경로로 연결됐는지), 동기화 플래그 (all-reduce 시작/완료 신호), 임시 버퍼 (작은 메시지 전달)
         - name: model-cache
           emptyDir: {}          # 프로덕션에서는 PVC 또는 S3 마운트 권장
 ---
