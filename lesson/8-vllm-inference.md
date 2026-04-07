@@ -31,6 +31,19 @@ kubectl run test --rm -it --image=curlimages/curl -- \
     "max_tokens": 50
   }'
 ```
+또는
+```
+# 터미널 1: 포트 포워딩
+kubectl port-forward svc/vllm-qwen-svc 8080:80
 
+# 터미널 2: 테스트
+curl http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen",
+    "messages": [{"role": "user", "content": "Hello"}],
+    "max_tokens": 50
+  }'
+```
 
 
