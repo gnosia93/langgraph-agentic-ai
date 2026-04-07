@@ -21,7 +21,7 @@ kubectl wait --for=condition=complete job/trtllm-engine-build --timeout=60m
 kubectl logs job/trtllm-engine-build
 ```
 
-tensorrt 인퍼런스 서버를 배포한다.
+TensorRT-LLM 서버를 배포한다.
 ```
 curl -o https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/yaml/trtllm-qwen.yaml
 
