@@ -8,7 +8,7 @@ brew install hashicorp/tap/terraform
 ### EKS 설치 ###
 ```
 git clone https://github.com/gnosia93/eks-agentic-ai.git
-cd eks-agentic-ai/tf
+cd eks-agentic-ai/iac/tf
 
 terraform init
 terraform apply -auto-approve
