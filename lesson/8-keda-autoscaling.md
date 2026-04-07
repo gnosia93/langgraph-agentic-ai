@@ -63,3 +63,18 @@ DCGM_FI_PROF_SM_ACTIVE             SM(Streaming Multiprocessor) 활성률
 container_cpu_usage_seconds_total  CPU 사용률
 container_memory_usage_bytes       메모리 사용량
 ```
+
+## 테스트 하기 ##
+```bash
+for i in $(seq 1 100); do
+  curl -s http://localhost:8080/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+      "model": "qwen",
+      "messages": [{"role": "user", "content": "Write a 1000 word essay about AI"}],
+      "max_tokens": 1000
+    }' &
+done
+wait
+```
+
