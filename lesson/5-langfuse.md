@@ -25,7 +25,6 @@ llm.invoke(input, config={"callbacks": [langfuse_handler]})
 @observe()
 def my_function():
     llm.invoke(input)  # 자동으로 추적됨
-데코레이터 방식이 훨씬 편해요. 어떤 방식으로 하실 건가요?
 ```
 
 ### 3. 커스텀 메트릭(트레이스) ###
