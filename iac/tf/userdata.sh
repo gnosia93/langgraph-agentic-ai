@@ -19,11 +19,13 @@ EC2_USER_SCRIPT
 # 2. Python 환경
 # ============================================================
 sudo -u ubuntu -i bash -c '
-source /home/ubuntu/anaconda3/bin/activate
-conda create -n gpu-dev python=3.11 -y
-conda activate gpu-dev
+wget https://repo.anaconda.com/archive/Anaconda3-2025.12-2-Linux-x86_64.sh
+bash Anaconda3-2025.12-2-Linux-x86_64.sh -b -p /home/ubuntu/anaconda3
+/home/ubuntu/anaconda3/bin/conda init bash
+source ~/.bashrc
+conda --version
 
-pip install torch --index-url https://download.pytorch.org/whl/cu121
+#pip install torch --index-url https://download.pytorch.org/whl/cu121
 pip install jupyterlab ipykernel
 python -m ipykernel install --user --name gpu-dev --display-name "gpu-dev"
 pip install huggingface_hub
