@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trtllm-qwen
+  namespace: default
+  labels:
+    app: trtllm-qwen
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trtllm-qwen
+  template:
+    metadata:
+      labels:
+        app: trtllm-qwen
+    spec:
+      serviceAccountName: s3-access-sa    # IRSA로 S3 권한 부여
+      nodeSelector:
+        node.kubernetes.io/instance-type: g6e.12xlarge
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      initContainers:
+        - name: download-from-s3
+          image: amazon/aws-cli:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "=== Downloading engine from S3 ==="
+              aws s3 cp s3://my-bucket/trtllm-engines/qwen/ /engines/qwen/ --recursive
+              echo "=== Downloading tokenizer from S3 ==="
+              aws s3 cp s3://my-bucket/trtllm-models/qwen-hf/ /models/qwen-hf/ --recursive
+              echo "=== Download complete ==="
+          volumeMounts:
+            - name: engine-store
+              mountPath: /engines
+            - name: model-cache
+              mountPath: /models
+      containers:
+        - name: triton
+          image: nvcr.io/nvidia/tritonserver:24.12-trtllm-python-py3
+          command: ["python", "-m", "tensorrt_llm.commands.serve"]
+          args:
+            - --engine_dir=/engines/qwen
+            - --tokenizer_dir=/models/qwen-hf
+            - --host=0.0.0.0
+            - --port=8000
+            - --max_beam_width=1
+          ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 8001
+              name: grpc
+          resources:
+            limits:
+              nvidia.com/gpu: "4"
+            requests:
+              nvidia.com/gpu: "4"
+          volumeMounts:
+            - name: shm
+              mountPath: /dev/shm
+            - name: engine-store
+              mountPath: /engines
+            - name: model-cache
+              mountPath: /models
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 120
+            periodSeconds: 30
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
+        - name: engine-store
+          emptyDir: {}
+        - name: model-cache
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trtllm-qwen-svc
+  namespace: default
+spec:
+  selector:
+    app: trtllm-qwen
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8000
+    - name: grpc
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: ClusterIP
