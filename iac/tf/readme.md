@@ -14,9 +14,10 @@ terraform init
 terraform apply --auto-approve
 ```
 > [!NOTE]
-> 클러스터 삭제: 
+> 클러스터 삭제:
+> 
 > terraform destroy --auto-approve
->
+
 
 ### 클러스터 등록 ###
 
