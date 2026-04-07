@@ -24,7 +24,6 @@
    - [TensorRT-LLM 인퍼런스](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/8-tensorrt-inference.md)
    - [KEDA 기반 오토 스케일링](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/8-keda-autoscaling.md)
    - Ingress + 로드밸런싱
-   - Helm Chart 구성
   
 * [9. Post Training](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/9.post-training.md)
 
