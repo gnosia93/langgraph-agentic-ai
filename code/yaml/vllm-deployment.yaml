@@ -60,7 +60,7 @@ spec:
         - name: shm
           emptyDir:
             medium: Memory
-            sizeLimit: 16Gi
+            sizeLimit: 2Gi
         - name: model-cache
           emptyDir: {}          # 프로덕션에서는 PVC 또는 S3 마운트 권장
 ---
