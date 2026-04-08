@@ -2,6 +2,10 @@
 
 ![](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/images/muti-agent-1.png)
 
+* Supervisor 패턴: 중앙 컨트롤러(Supervisor)가 워크플로우를 관리하며, 전문 에이전트에게 작업을 위임하고 최종 결과를 취합한다.
+* Hierarchical 패턴: 에이전트가 트리 구조로 구성된다. 상위 Supervisor가 하위 Supervisor에게 위임하고, 하위 Supervisor가 각 에이전트 팀을 관리한다. 복잡한 멀티 단계 프로젝트에 적합하다.
+* Swarm 패턴: 중앙 제어 없이 에이전트 간 직접 통신하는 분산 방식이다. 가장 적합한 에이전트에게 작업을 핸드오프하며, 유연성이 가장 높다.
+
 ### 수퍼바이저 패턴 샘플 ###
 ```python
 from langgraph.graph import StateGraph, MessagesState
