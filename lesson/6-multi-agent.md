@@ -1,5 +1,8 @@
+## 멀티 에이전트 오케스트레이션 ##
+
 ![](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/images/muti-agent-1.png)
 
+### 수퍼바이저 패턴 샘플 ###
 ```python
 from langgraph.graph import StateGraph, MessagesState
 from langchain_core.messages import AIMessage, HumanMessage
