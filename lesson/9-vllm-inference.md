@@ -62,3 +62,24 @@ python -m vllm.entrypoints.openai.bench_serving \
   --request-rate 10
 ```
 
+### Speculative Decoding 적용 ###
+Speculative Decoding은 작은 모델(draft)이 먼저 여러 토큰을 추측 생성하고, 큰 모델(target)이 한 번에 검증하는 방식으로 추론 속도를 높이는 방식이다.
+
+* Target 모델: Qwen2.5-27B (기존 배포 모델)
+* Draft 모델: Qwen2.5-3B (같은 계열의 작은 모델, 추측 적중률이 높음)
+기존 vllm-qwen.yaml 에서 args 부분만 수정한다.
+```
+args:
+  - "--model"
+  - "Qwen/Qwen2.5-Coder-27B-Instruct"
+  - "--tensor-parallel-size 4"
+  - "--max-model-len 4096"
+  - "--gpu-memory-utilization 0.90"
+  - "--speculative-model Qwen/Qwen2.5-Coder-3B-Instruct"
+  - "--num-speculative-tokens 5"
+```
+
+* 파라미터	설명
+ * --speculative-model	추측 생성에 사용할 draft 모델
+ * --num-speculative-tokens	draft 모델이 한 번에 추측할 토큰 수 (5가 일반적)
+draft 모델(3B)은 target 모델(27B)과 같은 GPU 메모리에 함께 로드된다. 3B 모델은 약 6GB 정도 차지하므로 L40S 48GB × 4 구성에서 메모리 여유가 충분하다.
