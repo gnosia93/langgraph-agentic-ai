@@ -28,3 +28,53 @@ def route_to_model(query: str):
 ```
 실제로는 분류기 자체도 비용이므로, 프롬프트 길이나 키워드 기반으로 단순하게 라우팅하는 경우도 많다.
 셀프 호스팅(vLLM)이면 API 비용은 없지만 GPU 시간이 비용이라, 작은 모델로 처리할 수 있는 건 작은 모델로 보내서 GPU 리소스를 아끼는 게 핵심이다.
+
+### 복구 ###
+
+에이전트가 프로덕션에서 실패하는 상황들에 대한 대비책이에요.
+
+흔한 실패 케이스:
+
+* LLM API 호출 실패 (타임아웃, rate limit, 500 에러)
+* 도구 호출 실패 (외부 API 다운, DB 연결 끊김)
+* LLM이 잘못된 형식의 응답 반환 (JSON 파싱 에러)
+* 에이전트가 무한 루프에 빠짐
+
+#### LangGraph에서 다루는 방식: ####
+```
+from langgraph.graph import StateGraph
+import time
+
+# 1. 재시도 (Retry with backoff)
+def call_llm_with_retry(state, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return llm.invoke(state["messages"])
+        except Exception as e:
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(2 ** attempt)  # 1초, 2초, 4초
+
+# 2. 폴백 (Fallback) - 큰 모델 실패 시 작은 모델로 대체
+def llm_with_fallback(state):
+    try:
+        return primary_llm.invoke(state["messages"])
+    except Exception:
+        return fallback_llm.invoke(state["messages"])
+
+# 3. 타임아웃 - 에이전트 전체 실행 시간 제한
+graph = workflow.compile()
+try:
+    result = graph.invoke(
+        input,
+        config={"recursion_limit": 25}  # 최대 25스텝으로 제한 (무한루프 방지)
+    )
+except Exception:
+    result = "처리 시간이 초과되었습니다."
+
+# 4. 조건부 라우팅 - 실패 시 다른 경로로
+def route_on_error(state):
+    if state.get("error"):
+        return "error_handler"  # 에러 처리 노드로
+    return "next_step"          # 정상 진행
+```
