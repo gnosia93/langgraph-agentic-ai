@@ -52,7 +52,7 @@ MoE 모델에서 EP를 적용할 때의 핵심 트레이드오프:
 * Expert 로드 밸런싱: 특정 expert에 토큰이 몰리면 해당 노드가 병목이 된다. 트레이닝 시 auxiliary loss로 밸런싱을 유도하지만, 인퍼런스에서는 입력 분포에 따라 불균형이 발생할 수 있다.
 * EP + TP + PP 3중 병렬화: 초대형 MoE 모델에서는 세 가지를 모두 조합해야 한다. 예를 들어 노드 내 8 GPU 중 4개씩 2그룹으로 TP를 걸고, expert를 노드 간 EP로 분산하고, attention 레이어는 PP로 나누는 식이다.
 
-### 실무 배포 시 자주 놓치는 부분들 ###
+### 배포 고려사항 ###
 * Health check와 failover:  
 멀티노드 서빙에서 한 노드가 죽으면 전체 파이프라인이 멈추게 된다. Kubernetes 환경에서 pod 단위 재시작보다는 전체 replica 단위 관리가 필요하다. Kubernetes 기본 기능만으로는 이런 "그룹 단위 lifecycle 관리"가 안 되기 때문에, [LeaderWorkerSet](https://lws.sigs.k8s.io/docs/overview/) 같은 커스텀 리소스나 별도의 오케스트레이션 로직이 필요하다.
 ![](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/images/multi-node-inf-3.png)
