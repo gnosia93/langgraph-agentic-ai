@@ -130,7 +130,7 @@ Decode (토큰 생성)
 시간축 →
 GPU: [Prefill 요청A ██████████][Decode B ░][Decode C ░][Prefill 요청D ██████████][Decode B ░]...
 
-Decode B, C 입장: Prefill이 GPU를 점유하는 동안 밀려서 TTBT(Time Between Tokens)가 튐
+Decode B, C 입장: Prefill이 GPU를 점유하는 동안 밀려서 ITL(Inter-Token Latency)이 튐
 Prefill D 입장: Decode가 끼어들어서 처리량이 떨어짐
 ```
 ### Prefill 그룹 ###
