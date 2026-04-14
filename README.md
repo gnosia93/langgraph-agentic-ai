@@ -23,9 +23,9 @@
    - 프롬프트 엔지니어링 심화: 시스템 프롬프트 설계, few-shot, chain-of-thought 같은 기법
 
 * [L7. 에이전트 가드레일 및 보안 강화](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/7.guard-rail.md)
-   - [에이전트 입력값 필터링](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/7-security-input-filter.md)
+   - [입력값 필터링](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/7-security-input-filter.md)
+   - Prompt Injection 탐지 모델 적용 (Llama Guard 3)
    - [에이전트 도구 호출 보안: SSRF 방지를 위한 네트워크 격리 (Egress 관리)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/7-security-ssrf.md)
-   - 실전 대응: Prompt Injection 탐지 모델 적용 (Llama Guard 3)
    - 권한 제어: LangGraph를 이용한 Human-in-the-loop(승인 절차) 구현
 
 * [L8. RAG 평가 파이프라인 구성하기](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/8.eval-framework.md)
