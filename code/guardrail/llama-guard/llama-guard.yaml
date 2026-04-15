@@ -1,0 +1,70 @@
+# llama-guard.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-guard
+  labels:
+    app: llama-guard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llama-guard
+  template:
+    metadata:
+      labels:
+        app: llama-guard
+    spec:
+      containers:
+      - name: llama-guard
+        image: vllm/vllm-openai:latest
+        args:
+        - --model=meta-llama/Llama-Guard-3-8B
+        - --max-model-len=4096
+        - --dtype=float16
+        - --port=8000
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "4"
+            memory: "16Gi"
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "8"
+            memory: "32Gi"
+            nvidia.com/gpu: "1"
+        env:
+        - name: HF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-secret
+              key: token
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 120
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 120
+          periodSeconds: 30
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llama-guard
+spec:
+  selector:
+    app: llama-guard
+  ports:
+  - port: 80
+    targetPort: 8000
+  type: ClusterIP
