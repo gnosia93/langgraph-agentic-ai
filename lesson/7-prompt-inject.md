@@ -87,3 +87,12 @@ async def agent_pipeline(user_input: str):
 
     return response
 ```
+
+#### 3. EKS 배포 구조 ####
+```
+EKS 클러스터:
+├── Pod: 메인 LLM (vLLM, GPU)         ← 실제 응답 생성
+├── Pod: Llama Guard 3 (vLLM, GPU)   ← 안전성 검사 전용
+└── Pod: 에이전트 API (FastAPI, CPU)    ← 오케스트레이션
+```
+Llama Guard 3는 8B 모델이라 A10G(24GB) 하나면 충분하므로, 메인 LLM과 별도 GPU에 띄워서 서로 영향을 안 주게 하는 게 좋다.
