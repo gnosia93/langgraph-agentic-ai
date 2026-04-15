@@ -101,12 +101,32 @@ Llama Guard 3는 8B 모델이라 A10G(24GB) 하나면 충분하므로, 메인 LL
 ## 가드레일 모델 배포하기 ##
 
 ### 1. Prompt Guard ###
+어플리케이션을 다운로드 받는다.
 ```
 curl -o Dockerfile https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/guardrail/prompt-guard/Dockerfile
 curl -o app.py https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/guardrail/prompt-guard/app.py
 curl -o prompt-guard.yaml https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/guardrail/prompt-guard/prompt-guard.yaml
 ```
+ecr 에 이미지를 푸시한다.
+```
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+AWS_REGION=ap-northeast-2
+REPO_NAME=prompt-guard
+IMAGE_TAG=latest
 
+# ecr 레포지토리 생성 및 로그인
+aws ecr create-repository --repository-name ${REPO_NAME} --region ${AWS_REGION}
+aws ecr get-login-password --region ${AWS_REGION} | \
+  docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+# 이미지 빌드
+docker build --build-arg HF_TOKEN=hf_xxxxx -t ${REPO_NAME}:${IMAGE_TAG} .
+docker tag ${REPO_NAME}:${IMAGE_TAG} \
+  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}:${IMAGE_TAG}
+
+# 푸시
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}:${IMAGE_TAG}
+```
 
 
 
