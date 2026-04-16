@@ -27,51 +27,163 @@ kubectl logs -f vllm-qwen-849cb97c7c-fcfnh
 ```
 [결과]
 ```
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299] 
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299]        █     █     █▄   ▄█
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.19.0
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299]   █▄█▀ █     █     █     █  model   Qwen/Qwen2.5-72B-Instruct
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:299] 
-(APIServer pid=1) INFO 04-16 11:02:11 [utils.py:233] non-default args: {'model': 'Qwen/Qwen2.5-72B-Instruct', 'max_model_len': 8192, 'served_model_name': ['qwen'], 'tensor_parallel_size': 4}
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_PORT
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_SERVICE_HOST
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_SERVICE_PORT
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_PROTO
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_ADDR
-(APIServer pid=1) WARNING 04-16 11:02:11 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT
-(APIServer pid=1) INFO 04-16 11:02:24 [model.py:549] Resolved architecture: Qwen2ForCausalLM
-(APIServer pid=1) INFO 04-16 11:02:24 [model.py:1678] Using max model len 8192
-(APIServer pid=1) INFO 04-16 11:02:24 [vllm.py:790] Asynchronous scheduling is enabled.
-(EngineCore pid=272) INFO 04-16 11:02:32 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='Qwen/Qwen2.5-72B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-72B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=qwen, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
-(EngineCore pid=272) WARNING 04-16 11:02:32 [multiproc_executor.py:1014] Reducing Torch parallelism from 24 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
-(EngineCore pid=272) INFO 04-16 11:02:32 [multiproc_executor.py:134] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=10.0.10.64 (local), world_size=4, local_world_size=4
-(Worker pid=375) INFO 04-16 11:02:40 [parallel_state.py:1400] world_size=4 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:58269 backend=nccl
-(Worker pid=377) INFO 04-16 11:02:41 [parallel_state.py:1400] world_size=4 rank=2 local_rank=2 distributed_init_method=tcp://127.0.0.1:58269 backend=nccl
-(Worker pid=378) INFO 04-16 11:02:41 [parallel_state.py:1400] world_size=4 rank=3 local_rank=3 distributed_init_method=tcp://127.0.0.1:58269 backend=nccl
-(Worker pid=376) INFO 04-16 11:02:41 [parallel_state.py:1400] world_size=4 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:58269 backend=nccl
-(Worker pid=378) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
-(Worker pid=378) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
-(Worker pid=377) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299] 
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299]        █     █     █▄   ▄█
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.19.0
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299]   █▄█▀ █     █     █     █  model   Qwen/Qwen2.5-72B-Instruct
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:299] 
+(APIServer pid=1) INFO 04-16 11:16:06 [utils.py:233] non-default args: {'model': 'Qwen/Qwen2.5-72B-Instruct', 'max_model_len': 8192, 'served_model_name': ['qwen'], 'tensor_parallel_size': 4}
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_SERVICE_PORT
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_PROTO
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_PORT
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_PORT_80_TCP_ADDR
+(APIServer pid=1) WARNING 04-16 11:16:06 [envs.py:1744] Unknown vLLM environment variable detected: VLLM_QWEN_SVC_SERVICE_HOST
+(APIServer pid=1) INFO 04-16 11:16:17 [model.py:549] Resolved architecture: Qwen2ForCausalLM
+(APIServer pid=1) INFO 04-16 11:16:17 [model.py:1678] Using max model len 8192
+(APIServer pid=1) INFO 04-16 11:16:17 [vllm.py:790] Asynchronous scheduling is enabled.
+(EngineCore pid=271) INFO 04-16 11:16:23 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='Qwen/Qwen2.5-72B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-72B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=qwen, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=271) WARNING 04-16 11:16:23 [multiproc_executor.py:1014] Reducing Torch parallelism from 24 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+(EngineCore pid=271) INFO 04-16 11:16:23 [multiproc_executor.py:134] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=10.0.10.64 (local), world_size=4, local_world_size=4
+(Worker pid=374) INFO 04-16 11:16:30 [parallel_state.py:1400] world_size=4 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:35187 backend=nccl
+(Worker pid=376) INFO 04-16 11:16:30 [parallel_state.py:1400] world_size=4 rank=2 local_rank=2 distributed_init_method=tcp://127.0.0.1:35187 backend=nccl
+(Worker pid=377) INFO 04-16 11:16:30 [parallel_state.py:1400] world_size=4 rank=3 local_rank=3 distributed_init_method=tcp://127.0.0.1:35187 backend=nccl
+(Worker pid=375) INFO 04-16 11:16:30 [parallel_state.py:1400] world_size=4 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:35187 backend=nccl
 (Worker pid=376) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(Worker pid=377) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
 (Worker pid=375) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
-(Worker pid=377) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(Worker pid=374) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
 (Worker pid=376) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
 (Worker pid=375) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
-(Worker pid=375) INFO 04-16 11:02:41 [pynccl.py:111] vLLM is using nccl==2.27.5
-(Worker pid=375) WARNING 04-16 11:02:42 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
-(Worker pid=376) WARNING 04-16 11:02:42 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
-(Worker pid=378) WARNING 04-16 11:02:42 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
-(Worker pid=377) WARNING 04-16 11:02:42 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
-(Worker pid=378) WARNING 04-16 11:02:42 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
-(Worker pid=376) WARNING 04-16 11:02:42 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
-(Worker pid=377) WARNING 04-16 11:02:42 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
-(Worker pid=375) WARNING 04-16 11:02:42 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
-(Worker pid=375) INFO 04-16 11:02:42 [parallel_state.py:1716] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
-(Worker_TP0 pid=375) INFO 04-16 11:02:43 [gpu_model_runner.py:4735] Starting to load model Qwen/Qwen2.5-72B-Instruct...
-(Worker_TP0 pid=375) INFO 04-16 11:02:43 [cuda.py:334] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
-(Worker_TP0 pid=375) INFO 04-16 11:02:43 [flash_attn.py:596] Using FlashAttention version 2
+(Worker pid=377) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(Worker pid=374) <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(Worker pid=374) INFO 04-16 11:16:31 [pynccl.py:111] vLLM is using nccl==2.27.5
+(Worker pid=374) WARNING 04-16 11:16:31 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
+(Worker pid=376) WARNING 04-16 11:16:31 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
+(Worker pid=375) WARNING 04-16 11:16:31 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
+(Worker pid=377) WARNING 04-16 11:16:31 [symm_mem.py:66] SymmMemCommunicator: Device capability 8.9 not supported, communicator is not available.
+(Worker pid=375) WARNING 04-16 11:16:31 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+(Worker pid=374) WARNING 04-16 11:16:31 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+(Worker pid=376) WARNING 04-16 11:16:31 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+(Worker pid=377) WARNING 04-16 11:16:31 [custom_all_reduce.py:154] Custom allreduce is disabled because it's not supported on more than two PCIe-only GPUs. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+(Worker pid=374) INFO 04-16 11:16:31 [parallel_state.py:1716] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(Worker_TP0 pid=374) INFO 04-16 11:16:32 [gpu_model_runner.py:4735] Starting to load model Qwen/Qwen2.5-72B-Instruct...
+(Worker_TP0 pid=374) INFO 04-16 11:16:32 [cuda.py:334] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=374) INFO 04-16 11:16:32 [flash_attn.py:596] Using FlashAttention version 2
+(Worker_TP0 pid=374) INFO 04-16 11:17:43 [weight_utils.py:581] Time spent downloading weights for Qwen/Qwen2.5-72B-Instruct: 69.520342 seconds
+Loading safetensors checkpoint shards:   0% Completed | 0/37 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:   5% Completed | 2/37 [00:00<00:07,  4.75it/s]
+Loading safetensors checkpoint shards:   8% Completed | 3/37 [00:00<00:08,  4.24it/s]
+Loading safetensors checkpoint shards:  11% Completed | 4/37 [00:00<00:08,  4.11it/s]
+Loading safetensors checkpoint shards:  14% Completed | 5/37 [00:01<00:08,  3.98it/s]
+Loading safetensors checkpoint shards:  16% Completed | 6/37 [00:01<00:08,  3.54it/s]
+Loading safetensors checkpoint shards:  19% Completed | 7/37 [00:01<00:08,  3.48it/s]
+Loading safetensors checkpoint shards:  22% Completed | 8/37 [00:02<00:08,  3.52it/s]
+Loading safetensors checkpoint shards:  24% Completed | 9/37 [00:02<00:07,  3.54it/s]
+Loading safetensors checkpoint shards:  27% Completed | 10/37 [00:02<00:08,  3.28it/s]
+Loading safetensors checkpoint shards:  30% Completed | 11/37 [00:03<00:07,  3.33it/s]
+Loading safetensors checkpoint shards:  32% Completed | 12/37 [00:03<00:07,  3.42it/s]
+Loading safetensors checkpoint shards:  35% Completed | 13/37 [00:03<00:06,  3.49it/s]
+Loading safetensors checkpoint shards:  38% Completed | 14/37 [00:03<00:07,  3.27it/s]
+Loading safetensors checkpoint shards:  41% Completed | 15/37 [00:04<00:06,  3.32it/s]
+Loading safetensors checkpoint shards:  43% Completed | 16/37 [00:04<00:06,  3.41it/s]
+Loading safetensors checkpoint shards:  46% Completed | 17/37 [00:04<00:05,  3.48it/s]
+Loading safetensors checkpoint shards:  49% Completed | 18/37 [00:05<00:05,  3.27it/s]
+Loading safetensors checkpoint shards:  51% Completed | 19/37 [00:05<00:05,  3.30it/s]
+Loading safetensors checkpoint shards:  54% Completed | 20/37 [00:05<00:05,  3.39it/s]
+Loading safetensors checkpoint shards:  57% Completed | 21/37 [00:05<00:04,  3.46it/s]
+Loading safetensors checkpoint shards:  59% Completed | 22/37 [00:06<00:04,  3.23it/s]
+Loading safetensors checkpoint shards:  62% Completed | 23/37 [00:06<00:04,  3.27it/s]
+Loading safetensors checkpoint shards:  65% Completed | 24/37 [00:06<00:03,  3.37it/s]
+Loading safetensors checkpoint shards:  68% Completed | 25/37 [00:07<00:03,  3.44it/s]
+Loading safetensors checkpoint shards:  70% Completed | 26/37 [00:07<00:03,  3.25it/s]
+Loading safetensors checkpoint shards:  73% Completed | 27/37 [00:07<00:03,  3.32it/s]
+Loading safetensors checkpoint shards:  76% Completed | 28/37 [00:08<00:02,  3.45it/s]
+Loading safetensors checkpoint shards:  78% Completed | 29/37 [00:08<00:02,  3.58it/s]
+Loading safetensors checkpoint shards:  81% Completed | 30/37 [00:08<00:02,  3.39it/s]
+Loading safetensors checkpoint shards:  84% Completed | 31/37 [00:08<00:01,  3.45it/s]
+Loading safetensors checkpoint shards:  86% Completed | 32/37 [00:09<00:01,  3.56it/s]
+Loading safetensors checkpoint shards:  89% Completed | 33/37 [00:09<00:01,  3.64it/s]
+Loading safetensors checkpoint shards:  92% Completed | 34/37 [00:09<00:00,  3.42it/s]
+Loading safetensors checkpoint shards:  95% Completed | 35/37 [00:10<00:00,  3.50it/s]
+Loading safetensors checkpoint shards:  97% Completed | 36/37 [00:10<00:00,  3.61it/s]
+Loading safetensors checkpoint shards: 100% Completed | 37/37 [00:10<00:00,  4.24it/s]
+Loading safetensors checkpoint shards: 100% Completed | 37/37 [00:10<00:00,  3.53it/s]
+(Worker_TP0 pid=374) 
+(Worker_TP0 pid=374) INFO 04-16 11:17:54 [default_loader.py:384] Loading weights took 10.48 seconds
+(Worker_TP0 pid=374) INFO 04-16 11:17:54 [gpu_model_runner.py:4820] Model loading took 33.98 GiB memory and 81.566250 seconds
+(Worker_TP0 pid=374) INFO 04-16 11:18:12 [backends.py:1051] Using cache directory: /root/.cache/vllm/torch_compile_cache/439360e93b/rank_0_0/backbone for vLLM's torch.compile
+(Worker_TP0 pid=374) INFO 04-16 11:18:12 [backends.py:1111] Dynamo bytecode transform time: 11.95 s
+(Worker_TP0 pid=374) INFO 04-16 11:18:18 [backends.py:372] Cache the graph of compile range (1, 2048) for later use
+(Worker_TP0 pid=374) INFO 04-16 11:18:24 [backends.py:390] Compiling a graph for compile range (1, 2048) takes 11.12 s
+(Worker_TP0 pid=374) INFO 04-16 11:18:27 [decorators.py:640] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/2b4bfa0090ed5f30588d2813601a92bfe08351e1490a0ccdefb0da8eed6b78fe/rank_0_0/model
+(Worker_TP0 pid=374) INFO 04-16 11:18:27 [monitor.py:48] torch.compile took 27.66 s in total
+(Worker_TP0 pid=374) INFO 04-16 11:18:31 [monitor.py:76] Initial profiling/warmup run took 3.28 s
+(Worker_TP3 pid=377) INFO 04-16 11:18:37 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(Worker_TP3 pid=377) INFO 04-16 11:18:37 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(Worker_TP1 pid=375) INFO 04-16 11:18:37 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(Worker_TP1 pid=375) INFO 04-16 11:18:37 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(Worker_TP0 pid=374) INFO 04-16 11:18:37 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(Worker_TP0 pid=374) INFO 04-16 11:18:37 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(Worker_TP2 pid=376) INFO 04-16 11:18:38 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(Worker_TP2 pid=376) INFO 04-16 11:18:38 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(Worker_TP3 pid=377) INFO 04-16 11:18:41 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 2.73 GiB total
+(Worker_TP0 pid=374) INFO 04-16 11:18:41 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 2.73 GiB total
+(Worker_TP1 pid=375) INFO 04-16 11:18:41 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 2.73 GiB total
+(Worker_TP2 pid=376) INFO 04-16 11:18:41 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 2.73 GiB total
+(Worker_TP3 pid=377) INFO 04-16 11:18:41 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.9000 to 0.9616 to maintain the same effective KV cache size.
+(Worker_TP0 pid=374) INFO 04-16 11:18:41 [gpu_worker.py:436] Available KV cache memory: 5.11 GiB
+(Worker_TP0 pid=374) INFO 04-16 11:18:41 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.9000 to 0.9616 to maintain the same effective KV cache size.
+(Worker_TP1 pid=375) INFO 04-16 11:18:41 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.9000 to 0.9616 to maintain the same effective KV cache size.
+(Worker_TP2 pid=376) INFO 04-16 11:18:41 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.9000 to 0.9616 to maintain the same effective KV cache size.
+(EngineCore pid=271) INFO 04-16 11:18:41 [kv_cache_utils.py:1319] GPU KV cache size: 67,024 tokens
+(EngineCore pid=271) INFO 04-16 11:18:41 [kv_cache_utils.py:1324] Maximum concurrency for 8,192 tokens per request: 8.18x
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:15<00:00,  3.27it/s]
+Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:07<00:00,  4.58it/s]
+(Worker_TP1 pid=375) INFO 04-16 11:19:05 [gpu_worker.py:597] CUDA graph pool memory: 2.62 GiB (actual), 2.73 GiB (estimated), difference: 0.11 GiB (4.3%).
+(Worker_TP0 pid=374) INFO 04-16 11:19:05 [gpu_model_runner.py:6046] Graph capturing finished in 24 secs, took 2.62 GiB
+(Worker_TP0 pid=374) INFO 04-16 11:19:05 [gpu_worker.py:597] CUDA graph pool memory: 2.62 GiB (actual), 2.73 GiB (estimated), difference: 0.11 GiB (4.3%).
+(Worker_TP3 pid=377) INFO 04-16 11:19:05 [gpu_worker.py:597] CUDA graph pool memory: 2.62 GiB (actual), 2.73 GiB (estimated), difference: 0.11 GiB (4.3%).
+(Worker_TP2 pid=376) INFO 04-16 11:19:05 [gpu_worker.py:597] CUDA graph pool memory: 2.62 GiB (actual), 2.73 GiB (estimated), difference: 0.11 GiB (4.3%).
+(EngineCore pid=271) INFO 04-16 11:19:05 [core.py:283] init engine (profile, create kv cache, warmup model) took 66.12 seconds
+(EngineCore pid=271) INFO 04-16 11:19:08 [vllm.py:790] Asynchronous scheduling is enabled.
+(APIServer pid=1) INFO 04-16 11:19:08 [api_server.py:590] Supported tasks: ['generate']
+(APIServer pid=1) WARNING 04-16 11:19:10 [model.py:1435] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'repetition_penalty': 1.05, 'temperature': 0.7, 'top_k': 20, 'top_p': 0.8}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=1) INFO 04-16 11:19:13 [hf.py:314] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=1) INFO 04-16 11:19:13 [api_server.py:594] Starting vLLM server on http://0.0.0.0:8000
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:37] Available routes are:
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /docs, Methods: HEAD, GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /tokenize, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /detokenize, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /load, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /version, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /health, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /metrics, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/models, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /ping, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /ping, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /invocations, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/responses, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/completions, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/messages, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=1) INFO 04-16 11:19:13 [launcher.py:46] Route: /v1/completions/render, Methods: POST
+(APIServer pid=1) INFO:     Started server process [1]
+(APIServer pid=1) INFO:     Waiting for application startup.
+(APIServer pid=1) INFO:     Application startup complete.
 ```
 
 ### vLLM 파라미터 ###
