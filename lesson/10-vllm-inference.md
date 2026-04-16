@@ -1,7 +1,7 @@
 ## vLLM 인퍼런스 ##
 
 ### vLLM 배포하기 ###
-[Qwen2.5-72B](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) 모델을 [g6e.12xlarge](https://aws.amazon.com/ko/ec2/instance-types/g6e/) (L40S 48GB * 4EA, TP=4) 설정으로 2개의 파드로 구성한다.  [vllm-qwen.yaml](https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/yaml/vllm-qwen.yaml) 파일을 다운로드 받은 후 디플로이먼트를 생성한다.
+[Qwen2.5-72B](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) 모델을 g6e.12xlarge (L40S 48GB * 4EA, TP=4) 설정으로 2개의 파드로 구성한다.  [vllm-qwen.yaml](https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/yaml/vllm-qwen.yaml) 파일을 다운로드 받은 후 디플로이먼트를 생성한다.
 
 ```bash
 mkdir vllm && cd vllm
