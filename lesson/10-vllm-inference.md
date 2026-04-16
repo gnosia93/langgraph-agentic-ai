@@ -322,14 +322,6 @@ TPOT와 Throughput에서 가장 큰 차이가 나타난다. 일반적으로 1.5~
 num-speculative-tokens는 너무 높이면 draft 모델의 추측이 틀릴 확률이 올라가서 오히려 느려질수 있다. 5가 무난한 시작점이고, 벤치마크 결과 보면서 3~7 사이에서 조절한다.
 
 
-## 기타 최적화 ##
-
-#### Prefill/Decode 분리 ####
-LLM 추론은 두 단계로 나뉜다.
-* Prefill: 입력 프롬프트의 모든 토큰을 한 번에 처리하여 KV Cache를 생성하는 단계. 행렬 연산이 크고 GPU 연산(compute)이 병목이다.
-* Decode: KV Cache를 참조하며 토큰을 하나씩 생성하는 단계. 연산량은 적지만 매 스텝마다 GPU 메모리를 읽어야 하므로 메모리 대역폭(memory bandwidth)이 병목이다.
-두 단계의 리소스 특성이 다르기 때문에, 같은 GPU에서 Prefill과 Decode가 섞이면 서로 간섭이 발생한다. 긴 프롬프트의 Prefill이 실행되면 Decode 중인 요청의 TPOT(Time per Output Token)이 튀는 현상이 생긴다. vLLM은 내부 스케줄러에서 Prefill과 Decode의 우선순위를 조절하여 이 간섭을 최소화한다.
-
 
 
 
