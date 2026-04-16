@@ -16,7 +16,7 @@ spec:
         app: vllm-qwen
     spec:
       nodeSelector:
-        node.kubernetes.io/instance-type: g6e.12xlarge
+        node.kubernetes.io/instance-type: g6e.12xlarge       # vram 48GB * GPU 4EA
       tolerations:
         - key: nvidia.com/gpu
           operator: Exists
