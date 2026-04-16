@@ -237,17 +237,7 @@ Handling connection for 8080
 {"id":"chatcmpl-9d34d7a96464f38f","object":"chat.completion","created":1776338760,"model":"qwen","choices":[{"index":0,"message":{"role":"assistant","content":"안녕하세요! 어떻게 도와드릴까요?","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[],"reasoning":null},"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null}],"service_tier":null,"system_fingerprint":null,"usage":{"prompt_tokens":32,"total_tokens":44,"completion_tokens":12,"prompt_tokens_details":null},"prompt_logprobs":null,"prompt_token_ids":null,"kv_transfer_params":null}
 ```
 
-
-
-
-
-
-
-
-
-
-----
-### vLLM 추론 최적화 ###
+## vLLM 추론 최적화 ##
 vLLM은 아래 세 가지 최적화를 기본 내장하고 있어 별도 설정 없이 자동 적용된다.
 
 #### KV Cache 최적화 (PagedAttention) ####
