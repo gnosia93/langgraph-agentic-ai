@@ -16,7 +16,7 @@ variable "vpc_cidr_block" {
 }
 
 variable "gpu_type" {
-  description = "EC2 Instance Type (x86)"
+  description = "EC2 Instance Type (x86) - used for bastion host"
   type        = string
   default     = "g7e.4xlarge"
 }
