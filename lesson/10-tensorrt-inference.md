@@ -524,6 +524,11 @@ genai-perf profile \
 * 전체 소요 시간 (다운로드, 변환, 빌드 각각) / 필요 디스크 용량.
 
 
+## 모델 로딩 시간 최적화 ##
+* EBS 볼륨에 미리 저장 — PVC로 EBS 볼륨을 만들어서 한 번만 다운로드하고, 파드가 재시작해도 다시 안 받음. 가장 효과적
+* S3 VPC Endpoint — 아직 없다면 추가하세요. S3 트래픽이 인터넷 대신 AWS 내부 네트워크로 가서 빨라짐
+* FSx for Lustre — S3를 자동으로 캐싱하는 고성능 파일시스템. 대규모 모델 서빙에서 많이 씀
+* aws s3 cp 병렬화 — init container에서:
 
 ## 레퍼런스 ##
 * NGC 이미지 태그 목록: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver/tags
