@@ -40,15 +40,6 @@ aws eks update-kubeconfig --name ${CLUSTER_NAME}
 #  --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"=${karpenter_role_arn}
 ```
 
-### 카펜터 설치 확인 ###
-본 워크샵에서는 테라폼 apply 시 eks 클러스터와 함께 카펜터가 자동으로 설치된다. 하지만 노드풀 및 ec2노드 클래스는 별도로 생성해야 한다. 
-```
-kubectl get pods -n karpenter -l app.kubernetes.io/name=karpenter
-kubectl get crd | grep karpenter
-
-kubectl logs -n karpenter -l app.kubernetes.io/name=karpenter --tail=50
-```
-
 ### 관리용 소프트웨어 설치 ###
 ```
 ARCH=amd64
@@ -80,6 +71,15 @@ go version
 go install github.com/awslabs/eks-node-viewer/cmd/eks-node-viewer@latest
 echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.bashrc
 source ~/.bashrc
+```
+
+### 카펜터 설치 확인 ###
+본 워크샵에서는 테라폼 apply 시 eks 클러스터와 함께 카펜터가 자동으로 설치된다. 하지만 노드풀 및 ec2노드 클래스는 별도로 생성해야 한다. 
+```
+kubectl get pods -n karpenter -l app.kubernetes.io/name=karpenter
+kubectl get crd | grep karpenter
+
+kubectl logs -n karpenter -l app.kubernetes.io/name=karpenter --tail=50
 ```
 
 ### 메트릭 서버 설치 ###
