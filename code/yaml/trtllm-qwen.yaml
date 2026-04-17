@@ -52,6 +52,7 @@ spec:
                 --port 8000 \
                 --tp_size 4 \
                 --max_beam_width 1 \
+                --max_batch_size 64 \
                 --backend tensorrt
           ports:
             - containerPort: 8000
