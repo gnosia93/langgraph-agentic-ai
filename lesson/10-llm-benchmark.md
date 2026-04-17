@@ -1,24 +1,15 @@
 ## 추론 성능 비교 (versus vLLM) ##
 
-python 3.12 로 된 conda 환경을 생성한다.
-```
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-
-conda create -n py312 python=3.12 -y
-conda activate py312
-
-pip install genai-perf
-```
-
 테스트 한다.
 ```
 genai-perf profile \
-    --model qwen \
-    --endpoint-type chat \
-    --url http://<서비스주소>:8000 \
-    --num-prompts 100 \
-    --concurrency 10
+  --model Qwen/Qwen2.5-72B-Instruct \
+  --endpoint-type chat \
+  --url http://localhost:8000 \
+  --num-prompts 100 \
+  --concurrency 10 \
+  --tokenizer Qwen/Qwen2.5-72B-Instruct
+
 ```
 #### 측정 항목: ####
 * TTFT (Time To First Token): 첫 토큰까지 걸리는 시간
