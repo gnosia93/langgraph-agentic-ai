@@ -29,13 +29,17 @@ Bedrock 호출에 필요한 boto3를 추가로 설치한다. 나머지 패키지
 pip install boto3
 ```
 
-
 ### 3. RAGQuery 클래스 내려받기 ###
 미리 작성해 둔 클래스 파일을 가져온다.
 ```
 curl -o RAGSearch.py \
 https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/rag/RAGSearch.py
 ```
+이 파일에는 다음 기능이 구현돼 있다. 
+* 저장 때와 동일한 BAAI/bge-m3 모델로 질의 벡터화
+* Milvus에서 유사도 기반 top-k 청크 검색
+* BAAI/bge-reranker-v2-m3로 CrossEncoder 기반 재정렬
+* Bedrock Converse API 호출로 Claude, Nova, Llama 등 모델을 동일한 인터페이스로 사용
 
 ### 4. 실행 스크립트 작성 (query.py) ###
 ```
