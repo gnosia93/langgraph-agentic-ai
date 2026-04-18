@@ -86,6 +86,8 @@ collection.insert([vectors])
 ```
 
 #### 인덱스 생성 & 로드 ####
+Milvus는 검색 성능을 위해 메모리에 올라와 있는 인덱스만 검색한다. 아래 load() 함수는 해당 collection을 메모리로 올리는 함수이다.
+
 ```
 collection.create_index("embedding", {"index_type": "HNSW", "metric_type": "L2", "params": {"M": 8, "efConstruction": 64}})
 collection.load()
