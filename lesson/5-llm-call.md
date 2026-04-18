@@ -24,7 +24,7 @@ rag/
 ```
 
 ### 2. 환경 준비 ###
-필요한 패키지를 설치한다.
+Bedrock 호출에 필요한 boto3를 추가로 설치한다. 나머지 패키지(pymilvus, sentence-transformers 등)는 저장 단계에서 이미 설치돼 있다.
 ```
 pip install boto3
 ```
