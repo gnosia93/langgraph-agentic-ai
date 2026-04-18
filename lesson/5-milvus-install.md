@@ -1,4 +1,4 @@
-### s3 버킷확인 ###
+### 1. s3 버킷확인 ###
 테라폼에서 milvus 용으로 생성한 버킷 확인한다. 
 ```
 export CLUSTER_NAME=eks-agentic-ai
@@ -17,9 +17,7 @@ echo "MILVUS_ROLE_ARN: ${MILVUS_ROLE_ARN}"
 aws s3 ls | grep ${VECTORDB_BUCKET_NAME}
 ```
 
-
-
-### milvus 설치 ###
+### 2. milvus 설치 ###
 eks 클러스터에 milvus 를 설치한다.
 ```
 helm repo add milvus https://zilliztech.github.io/milvus-helm/
