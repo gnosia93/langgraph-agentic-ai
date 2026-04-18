@@ -20,7 +20,7 @@ def main():
     parser.add_argument("--host", default="localhost", help="Milvus 호스트")
     parser.add_argument("--port", default="19530", help="Milvus 포트")
     parser.add_argument("--collection", default="papers", help="컬렉션 이름")
-    parser.add_argument("--region", default="us-west-2", help="AWS 리전")
+    parser.add_argument("--region", default="ap-northeast-2", help="AWS 리전")
     parser.add_argument(
         "--model",
         default="anthropic.claude-3-5-sonnet-20241022-v2:0",
