@@ -11,11 +11,47 @@ https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/r
 
 ```
 
-* https://github.com/gnosia93/eks-agentic-ai/blob/main/code/rag/rag-pipeline.py
 ```
-그리고 Bedrock 콘솔에서 모델 액세스 활성화(Model access)도 미리 해둬야 합니다.
-리전 확인: Cohere Rerank v3.5와 Claude 모델이 모든 리전에 있는 건 아닙니다. ap-northeast-2에 없는 모델이면 us-west-2 등으로 바꿔야 할 수 있어요
-모델 ID: 위 Claude 모델 ID는 예시입니다. Bedrock 콘솔에서 실제 사용 가능한 ID 확인하세요
-스트리밍: 실제 앱이면 invoke_model_with_response_stream 쓰는 게 UX 좋습니다
-리전/모델 가용성만 확인하면 바로 돌아갈 코드입니다.
+import argparse
+from RAGSearch import RAGSearch
+
+def main():
+    parser = argparse.ArgumentParser(description="Milvus + Bedrock RAG 질의 응답")
+    parser.add_argument("--host", default="localhost", help="Milvus 호스트")
+    parser.add_argument("--port", default="19530", help="Milvus 포트")
+    parser.add_argument("--collection", default="papers", help="컬렉션 이름")
+    parser.add_argument("--region", default="us-west-2", help="AWS 리전")
+    parser.add_argument(
+        "--model",
+        default="anthropic.claude-3-5-sonnet-20241022-v2:0",
+        help="Bedrock 모델 ID",
+    )
+    parser.add_argument("--top-k", type=int, default=20, help="검색 후보 수")
+    parser.add_argument("--top-n", type=int, default=5, help="재순위 후 사용할 수")
+    parser.add_argument("query", help="질문")
+
+    args = parser.parse_args()
+
+    rag = RAGSearch(
+        host=args.host,
+        port=args.port,
+        collection_name=args.collection,
+        bedrock_model_id=args.model,
+        aws_region=args.region,
+    )
+
+    result = rag.query(args.query, top_k=args.top_k, top_n=args.top_n)
+
+    print("=" * 60)
+    print(f"Q: {result['query']}")
+    print("=" * 60)
+    print(result["answer"])
+    print("\n" + "-" * 60)
+    print("참조한 컨텍스트:")
+    for i, c in enumerate(result["contexts"], 1):
+        print(f"  {i}. [{c['doc_name']} p.{c['page']}] "
+              f"sim={c['score']:.3f} rerank={c['rerank_score']:.3f}")
+
+if __name__ == "__main__":
+    main()
 ```
