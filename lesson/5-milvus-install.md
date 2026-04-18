@@ -1,3 +1,9 @@
+### s3 버킷생성 ###
+```
+aws se mb
+```
+
+### milvus 설치 ###
 ```
 helm repo add milvus https://zilliz.github.io/milvus-helm/
 helm repo update
