@@ -47,7 +47,8 @@ Milvus는 gRPC(19530)와 HTTP(9091) 두 가지 포트를 노출한다.
 kubectl port-forward svc/milvus -n milvus 19530:19530
 ```
 
-파이썬 IDE 에서 아래 코드를 실행한다.
+### 코드실행 ###
+
 ```
 from pymilvus import connections, Collection, FieldSchema, CollectionSchema, DataType
 
@@ -61,14 +62,14 @@ schema = CollectionSchema(fields)
 collection = Collection("test_collection", schema)
 ```
 
-#### 더미 백터(128차원) 생성 및 DB 입력 ####
+#### 1. 더미 백터(128차원) 생성 및 DB 입력 ####
 ```
 import random
 vectors = [[random.random() for _ in range(128)] for _ in range(10)]
 collection.insert([vectors])
 ```
 
-#### 인덱스 생성 & 로드 ####
+#### 2. 인덱스 생성 & 로드 ####
 Milvus는 검색 성능을 위해 메모리에 올라와 있는 인덱스만 검색한다. 아래 load() 함수는 해당 collection을 메모리로 올리는 함수이다.
 
 ```
@@ -76,7 +77,7 @@ collection.create_index("embedding", {"index_type": "HNSW", "metric_type": "L2",
 collection.load()
 ```
 
-#### 검색 ####
+#### 3. 백터 검색 ####
 ```
 results = collection.search(
     data=[vectors[0]],
