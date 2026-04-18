@@ -105,7 +105,7 @@ EOF
 
 sh download_pdfs.sh 
 ```
-실행한다.
+MILVUS_DB 에 pdf를 저장한다.
 ```
 kubectl port-forward -n milvus svc/milvus 19530:19530 &
 export MILVUS_DB_IP=localhost
