@@ -107,7 +107,8 @@ sh download_pdfs.sh
 ```
 실행한다.
 ```
-python main.py --host 10.0.0.5 pdfs/a.pdf /tmp/b.pdf ./c.pdf
+export MIVUS_DB_IP=
+python main.py --host ${MIVUS_DB_IP} --reset pdfs/*.pdf
 ```
 실행이 끝나면 다음과 같은 메시지가 출력된다.
 
