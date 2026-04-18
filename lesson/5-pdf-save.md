@@ -74,8 +74,33 @@ if __name__ == "__main__":
 
 ### 5. 실행 ###
 ```
-curl -o LoRA_Low-Rank_Adaptation.pdf https://arxiv.org/pdf/2106.09685.pdf
+mkdir -p pdfs
 
+declare -a papers=(
+  "01_Attention_Is_All_You_Need:1706.03762"
+  "02_LoRA_Low-Rank_Adaptation:2106.09685"
+  "03_RAG:2005.11401"
+  "04_Chain_of_Thought:2201.11903"
+  "05_ReAct:2210.03629"
+  "06_FlashAttention:2205.14135"
+  "07_Llama3_Technical_Report:2407.21783"
+  "08_BGE_M3:2402.03216"
+  "09_DeepSeek_R1:2501.12948"
+  "10_Megatron_LM:1909.08053"
+)
+
+for paper in "${papers[@]}"; do
+  name="${paper%%:*}"
+  id="${paper##*:}"
+  echo "Downloading $name ($id)..."
+  curl -L -o "pdfs/${name}.pdf" "https://arxiv.org/pdf/${id}.pdf"
+done
+
+echo "Done!"
+ls -lh pdfs/
+```
+
+```
 python main.py --host 10.0.0.5 pdfs/a.pdf /tmp/b.pdf ./c.pdf
 ```
 실행이 끝나면 다음과 같은 메시지가 출력된다.
