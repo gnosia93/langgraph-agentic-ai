@@ -31,7 +31,7 @@ pip install pymilvus langchain langchain-community pymupdf sentence-transformers
 * pymupdf : PDF 레이아웃 파싱(텍스트/페이지 정보 추출)
 * sentence-transformers : 로컬에서 실행되는 오픈소스 임베딩 모델 (무료)
 
-### 3. PDFVectorStore 클래스 내려받기 ###
+### [3. PDFVectorStore 클래스 내려받기](https://github.com/gnosia93/eks-agentic-ai/blob/main/code/rag/PDFVectorStore.py) ###
 미리 작성해 둔 클래스 파일을 가져온다.
 ```
 curl -o PDFVectorStore.py
