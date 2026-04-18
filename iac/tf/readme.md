@@ -60,6 +60,7 @@ curl --silent --location "https://github.com/derailed/k9s/releases/latest/downlo
 sudo mv /tmp/k9s /usr/local/bin/
 k9s version
 ```
+eks-node-viewer 설치시 2분 정도의 시간이 소요된다.
 ```
 wget https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
