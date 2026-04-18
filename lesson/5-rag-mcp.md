@@ -42,7 +42,6 @@ RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncod
 
 # 앱 코드
 COPY RAGSearch.py rag_mcp_server.py ./
-
 EXPOSE 8000
-```
 CMD ["python", "rag_mcp_server.py"]
+```
