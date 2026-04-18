@@ -18,10 +18,27 @@ aws s3 ls | grep ${VECTORDB_BUCKET_NAME}
 ```
 
 ### CSI 드라이버 확인 ###
+
+#### 1. 스토리지 클래스 조회 ####
 ```
-storage class
-csi 드라이버 설치확인 
-addon 확인
+kubectl get sc
+```
+[결과]
+```
+NAME            PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+gp2             kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  22m
+gp3 (default)   ebs.csi.aws.com         Delete          WaitForFirstConsumer   true                   17m
+```
+#### 2. EBS CSI 드라이버 확인 ###
+```
+
+```
+[결과]
+```
+```
+
+#### 3. addon 확인 ###
+```
 ```
 
 
