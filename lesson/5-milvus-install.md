@@ -12,6 +12,7 @@ echo "ACCOUNT_ID: $ACCOUNT_ID"
 echo "AWS_REGION: $AWS_REGION"
 echo "VECTORDB_BUCKET_NAME: ${VECTORDB_BUCKET_NAME}"
 
+aws s3 rb s3://${VECTORDB_BUCKET_NAME} --region ${AWS_REGION} --force || true
 aws s3 mb s3://${VECTORDB_BUCKET_NAME} --region ${AWS_REGION}
 aws s3 ls | grep ${VECTORDB_BUCKET_NAME}
 ```
