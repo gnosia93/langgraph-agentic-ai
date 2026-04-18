@@ -42,25 +42,7 @@ kubectl annotate serviceaccount milvus \
 ## 테스트 ##
 Milvus는 gRPC(19530)와 HTTP(9091) 두 가지 포트를 노출한다.
 
-###  클러스터 내부에서 접근 ###
-같은 EKS 안의 다른 Pod에서 접근할 때:
-```
-milvus.milvus.svc.cluster.local:19530
-```
-
-#### Python SDK 예시: ####
-```
-from pymilvus import connections
-
-connections.connect(
-    alias="default",
-    host="milvus.milvus.svc.cluster.local",
-    port="19530"
-)
-```
-
-### 로컬에서 테스트할 때 ###
-port-forward로 빠르게 확인:
+#### port-forward ####
 ```
 kubectl port-forward svc/milvus -n milvus 19530:19530
 ```
