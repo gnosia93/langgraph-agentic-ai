@@ -60,3 +60,9 @@ store.add_pdf("LoRA_Low-Rank_Adaptation.pdf")
 * collection_name : 문서들을 저장할 컬렉션 이름.
 * reset=True : 같은 이름의 컬렉션이 있으면 삭제하고 새로 만든다. 이미 저장된 데이터를 유지하면서 추가만 하고 싶다면 False로 설정한다.
 
+### 5. 실행 ###
+```
+python main.py
+```
+실행이 끝나면 다음과 같은 메시지가 출력된다.
+
