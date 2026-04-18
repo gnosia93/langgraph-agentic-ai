@@ -34,7 +34,7 @@ pip install pymilvus langchain langchain-community pymupdf sentence-transformers
 ### [3. PDFVectorStore 클래스 내려받기](https://github.com/gnosia93/eks-agentic-ai/blob/main/code/rag/PDFVectorStore.py) ###
 미리 작성해 둔 클래스 파일을 가져온다.
 ```
-curl -o PDFVectorStore.py
+curl -o PDFVectorStore.py \
 https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/rag/PDFVectorStore.py
 ```
 이 파일 안에는 다음 기능이 구현돼 있다.  
