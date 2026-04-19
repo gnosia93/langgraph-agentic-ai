@@ -1,11 +1,11 @@
 
-### 1. 파이프라인 ###
+## 1. 파이프라인 ##
 파이프라인 설계는 데이터가 흘러가는 순서와 각 단계의 기술에 대한 선택으로 어떤 청킹 전략을 쓸지, 임베딩 모델은 뭘 쓸지, 리랭커를 넣을지 말지와 같은 기술적 결정이다.
 
 ![](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/images/rag-pipeline.png)
 * 문서 수집 → (레이아웃) 파싱 → 청킹 → 임베딩 → 벡터DB 저장 → 검색 → 리랭킹 → LLM 생성
 
-### 2. 청킹 전략 ###
+## 2. 청킹 전략 ##
 
 ```
 1. Fixed Size Chunking       — 정해진 크기로 기계적 분할
@@ -17,7 +17,7 @@
 7. Agentic Chunking          — LLM이 직접 나눔
 ```
 
-### 3. 임베딩 모델 선정 ###
+## 3. 임베딩 모델 선정 ##
 
 #### 1. 성능 (벤치마크) ####
 * MTEB (Massive Text Embedding Benchmark) — 영어 표준
@@ -54,17 +54,111 @@ BGE-M3, E5 등은 무료
 ```
 
 #### 5. 도메인 적합성 ####
-일반 모델은 범용적이지만, 특수 도메인이면 전용 모델이 나음
+일반 모델은 범용적이지만, 특수 도메인이면 전용 모델이 더 낫다.
 ```
 코드: voyage-code-2, jina-embeddings-v2-code, CodeBERT
 의료: BioBERT, PubMedBERT 기반
 법률: LegalBERT
 금융: FinBERT
 ```
-다만 대부분은 범용 + 리랭커 조합이 실용적. 도메인 모델은 학습 데이터가 제한적이라 일반 질문엔 약할 수 있음.
+다만 대부분은 범용 + 리랭커 조합이 실용적이다. 도메인 모델은 학습 데이터가 제한적이라 일반 질문엔 약할 수 있다.
+
+#### 6. 도메인 데이터 평가 ###
+MTEB 점수는 범용 벤치마크 기준이라, 실제 대상 도메인에서 성능이 다를 수 있으므로, 직접 평가하는 게 가장 정확하다.
+```
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+# ============================================================
+# 후보 모델 정의
+# - bge-m3: 다국어 지원, prefix 불필요, 경량
+# - multilingual-e5-large: 다국어 지원, query/passage prefix 필요, 대형
+# ============================================================
+models = {
+    "bge-m3": SentenceTransformer("BAAI/bge-m3"),
+    "multilingual-e5-large": SentenceTransformer("intfloat/multilingual-e5-large"),
+}
+
+# 모델별 쿼리 prefix
+# - 모델 학습 시 쿼리와 문서를 구분하기 위해 사용
+# - prefix가 없으면 모델이 쿼리를 문서로 취급해서 검색 정확도가 떨어짐
+query_prefixes = {
+    "bge-m3": "",                  # bge-m3는 prefix 불필요
+    "multilingual-e5-large": "query: ",  # e5 계열은 "query: " 필수
+}
+
+# 모델별 문서 prefix
+# - e5 계열은 문서에도 "passage: " prefix를 붙여야 정확도가 올라감
+doc_prefixes = {
+    "bge-m3": "",                  # bge-m3는 prefix 불필요
+    "multilingual-e5-large": "passage: ",  # e5 계열은 "passage: " 필수
+}
+
+# ============================================================
+# 문서 데이터 (벡터DB에 들어갈 청크들)
+# - 한국어+영어 혼합 → 다국어 모델 필요
+# ============================================================
+documents = [
+    "GPU OOM 해결: 배치 크기 줄이기, Gradient Accumulation, Mixed Precision, Activation Checkpointing 적용",
+    "Kubernetes Pod CrashLoopBackOff: kubectl logs, kubectl describe pod로 이벤트 확인",
+    "Prometheus는 pull 방식으로 메트릭 수집, PromQL로 시계열 데이터 쿼리",
+    "Slurm 멀티노드 학습: sbatch에서 --nodes, --ntasks-per-node, --gpus-per-node 설정",
+    "NCCL 통신 최적화: NCCL_DEBUG=INFO로 로그 확인, EFA 사용 시 FI_PROVIDER=efa 설정",
+]
+
+# ============================================================
+# 평가 데이터: (질문, 정답 문서 인덱스)
+# - 실제 평가 시에는 수십~수백 개 이상 필요
+# - 여기서는 간단한 동작 확인용
+# ============================================================
+eval_data = [
+    {"query": "GPU 메모리 부족할 때 어떻게 해?", "relevant_doc_id": 0},
+    {"query": "Pod가 계속 재시작돼", "relevant_doc_id": 1},
+    {"query": "Slurm에서 멀티노드 학습 설정은?", "relevant_doc_id": 3},
+    {"query": "NCCL 성능 튜닝 방법은?", "relevant_doc_id": 4},
+]
+
+# ============================================================
+# 모델별 평가 실행
+# - normalize_embeddings=True: 벡터 정규화 → np.dot이 코사인 유사도와 동일
+# - Hit Rate@5: 상위 5개 안에 정답이 포함된 비율
+# - MRR@5: 정답 순위의 역수 평균 (1위=1.0, 2위=0.5, 3위=0.33...)
+# ============================================================
+for name, model in models.items():
+    q_prefix = query_prefixes[name]
+    d_prefix = doc_prefixes[name]
+
+    # 문서 임베딩 (prefix 적용 + 정규화)
+    doc_texts = [d_prefix + doc for doc in documents]
+    doc_embs = model.encode(doc_texts, normalize_embeddings=True)
+
+    hit = 0
+    mrr = 0
+    for item in eval_data:
+        # 쿼리 임베딩 (prefix 적용 + 정규화)
+        query_emb = model.encode(q_prefix + item["query"], normalize_embeddings=True)
+
+        # 코사인 유사도 계산 (정규화된 벡터이므로 dot product = cosine similarity)
+        scores = np.dot(doc_embs, query_emb)
+
+        # 유사도 높은 순으로 상위 5개 인덱스
+        top_k = np.argsort(scores)[::-1][:5]
+
+        if item["relevant_doc_id"] in top_k:
+            hit += 1
+            rank = list(top_k).index(item["relevant_doc_id"]) + 1
+            mrr += 1 / rank
+
+    print(f"{name}: Hit Rate@5={hit/len(eval_data):.2f}, MRR@5={mrr/len(eval_data):.2f}")
+```
+* Hit Rate@5: 상위 5개 안에 정답이 포함된 비율
+* MRR@5: 정답이 몇 번째에 있는지 (1위면 1.0, 2위면 0.5, 3위면 0.33)
+
+> [!TIP]
+> 도메인 문서에 대해 질문과 정답 문서 쌍을 구성하고, 임베딩 모델별로 코사인 유사도(Cosine Similarity)를 계산하여 Top-N 검색 결과에 대한 Hit Rate와 MRR(Mean Reciprocal Rank)을 비교함으로써 최적의 임베딩 모델을 선정한다.
 
 
-### 4. 벡터DB 선정기준 ###
+## 4. 벡터DB 선정기준 ##
 * 하이브리드 검색 지원 여부
 * 확장성
   * 데이터 규모: 수만 건이면 뭘 써도 되지만, 수천만~억 건이면 Milvus, Pinecone처럼 분산 아키텍처가 필요
@@ -72,7 +166,7 @@ BGE-M3, E5 등은 무료
 * 메타데이터 필터링 - 검색 시 벡터 유사도 + 메타데이터 조건을 함께 걸 수 있는지.
 
 
-### 5. 리랭커 모델 선정 ###
+## 5. 리랭커 모델 선정 ##
 임베딩 모델 선정 후, 벡터 검색으로 가져온 후보 문서들에 대해서 리랭커 적용 전후를 비교하여 리랭커가 실제로 검색 품질을 올려주는지도 확인해야 한다. 리랭커는 추론 비용과 지연 시간을 동반하므로, 사용하지 않을때와 비슷한 Hit Rate/MRR 보여주면 굳이 쓸 필요가 없다.
 ```
 from sentence_transformers import CrossEncoder
