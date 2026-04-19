@@ -19,6 +19,62 @@ LangGraph Agent (워크플로우)
 * GET  /health                 → 헬스체크 (선택이지만 권장)
 
 
+## Open WebUI 설치 ##
+```
+helm repo add open-webui https://helm.openwebui.com/
+helm repo update
+```
+open-webui-values.yaml 파일을 만든다.
+```
+cat << 'EOF' > open-webui-values.yaml
+ollama:
+  enabled: false   # 별도 Ollama 안 쓸 거면
+
+# 외부 LLM(Bedrock 등) 연결할 거면 Ollama 불필요
+openaiBaseApiUrl: "http://vllm.vllm.svc.cluster.local/v1"  # 예시
+
+persistence:
+  enabled: true
+  size: 20Gi
+  storageClass: gp3
+
+service:
+  type: ClusterIP   # Ingress로 노출 권장
+  port: 80
+
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+
+# 초기 관리자 자동 생성 (선택)
+extraEnvVars:
+  - name: WEBUI_NAME
+    value: "Agentic AI Workshop"
+  - name: DEFAULT_USER_ROLE
+    value: "user"
+  - name: ENABLE_SIGNUP
+    value: "true"
+```
+
+배포하기
+```
+helm install open-webui open-webui/open-webui \
+  -n webui --create-namespace \
+  -f open-webui-values.yaml
+```
+
+
+
+
+
+
+
+
+
 ## FastAPI + LangGraph ##
 ```
 import json
