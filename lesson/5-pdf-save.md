@@ -24,6 +24,7 @@ rag/
 mkdir -p rag/pdfs && cd rag
 
 pip install pymilvus langchain langchain-community pymupdf sentence-transformers
+pip install langchain-text-splitters
 ```
 각 패키지의 역할: 
 * pymilvus : Milvus 벡터 DB 파이썬 클라이언트
