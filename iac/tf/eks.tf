@@ -114,6 +114,7 @@ resource "aws_eks_node_group" "system" {
   node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = aws_subnet.private[*].id
   instance_types  = var.system_node_instance_types
+  ami_type        = var.system_node_ami_type
 
   scaling_config {
     desired_size = 2
