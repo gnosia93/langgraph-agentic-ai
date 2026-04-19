@@ -230,5 +230,4 @@ kill $PF_PID
 
 ### 리소스 요구량 ###
 bge-m3 + bge-reranker-v2-m3 로딩에 메모리 약 5~6GB 필요.  
-CPU만 쓰면 질의 응답에 1~3초, GPU 노드면 훨씬 빠르다.
 
