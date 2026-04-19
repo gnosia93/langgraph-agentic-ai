@@ -147,7 +147,14 @@ config.json: 100%|████████████████████�
 model.safetensors: 100%|██████████████████████████████████████████████████████████████████████████| 2.27G/2.27G [00:18<00:00, 122MB/s]
 [01_Attention_Is_All_You_Need] inserted 49 chunks
 [02_LoRA_Low-Rank_Adaptation] inserted 104 chunks
-...
+[03_RAG] inserted 88 chunks
+[04_Chain_of_Thought] inserted 173 chunks
+[05_ReAct] inserted 140 chunks
+[06_FlashAttention] inserted 139 chunks
+[07_Llama3_Technical_Report] inserted 451 chunks
+[08_BGE_M3] inserted 87 chunks
+[09_DeepSeek_R1] inserted 297 chunks
+[10_Megatron_LM] inserted 84 chunks
 ```
 포트 포워딩을 종료한다. 
 ```
