@@ -154,6 +154,14 @@ model.safetensors: 100%|██████████████████�
 kill $PF_PID
 ```
 
+## 빠른 Sanity Check ##
+```bash
+curl -o check_milvus.py
+https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/rag/check_milvus.py
+
+python check_milvus.py
+```
+
 ## [BAAI/bge-m3](https://arxiv.org/pdf/2402.03216) ##
 BAAI(베이징 지능연구원)가 2024년 공개한 오픈소스 다국어 임베딩 모델. 이름의 "M3"는 세 가지 M을 뜻한다.
 
