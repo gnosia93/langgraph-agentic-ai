@@ -134,7 +134,8 @@ kubectl get sa rag-mcp-sa -n rag
 #### 4.2 Deployment & Service ####
 
 `deployment.yaml`:
-```yaml
+```bash
+cat << 'EOF' > mcp-deployment.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -198,10 +199,11 @@ spec:
   ports:
     - port: 80
       targetPort: 8000
+EOF
 ```
 
 ```bash
-kubectl apply -f deployment.yaml
+envsubst < mcp-deployment.yaml | kubectl apply -f -
 kubectl -n rag get pods -w
 ```
 
