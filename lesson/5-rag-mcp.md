@@ -155,10 +155,10 @@ spec:
               value: "anthropic.claude-3-5-sonnet-20241022-v2:0"
           resources:
             requests:
-              cpu: "1"
+              cpu: "2"
               memory: "6Gi"
             limits:
-              cpu: "2"
+              cpu: "4"
               memory: "8Gi"
           readinessProbe:
             httpGet:
