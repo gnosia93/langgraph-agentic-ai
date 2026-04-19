@@ -113,7 +113,6 @@ PF_PID=$!
 sleep 3   # 포트 포워딩 준비 대기
 
 export MILVUS_DB_IP=localhost
-
 python query.py --host ${MILVUS_DB_IP} \
   "LoRA에서 low-rank adaptation이 왜 효과적인가?"
 
