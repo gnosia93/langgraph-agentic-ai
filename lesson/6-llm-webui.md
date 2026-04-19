@@ -30,10 +30,8 @@ cat << 'EOF' > open-webui-values.yaml
 ollama:
   enabled: false
 
-# 외부 LLM(FastAPI/Agent Gateway 등) 연결
-openaiBaseApiUrls:
-  - "http://agent-gateway.agents.svc.cluster.local:8000/v1"
-
+# 일단 이 필드 빼두고 WebUI 띄우기 / 로그인 후 Settings에서 나중에 추가 가능
+openaiBaseApiUrls: []
 openaiApiKey: "dummy"
 
 persistence:
