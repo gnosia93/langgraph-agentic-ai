@@ -28,10 +28,13 @@ open-webui-values.yaml 파일을 만든다.
 ```
 cat << 'EOF' > open-webui-values.yaml
 ollama:
-  enabled: false   # 별도 Ollama 안 쓸 거면
+  enabled: false
 
-# 외부 LLM(Bedrock 등) 연결할 거면 Ollama 불필요
-openaiBaseApiUrl: "http://vllm.vllm.svc.cluster.local/v1"  # 예시
+# 외부 LLM(FastAPI/Agent Gateway 등) 연결
+openaiBaseApiUrls:
+  - "http://agent-gateway.agents.svc.cluster.local:8000/v1"
+
+openaiApiKey: "dummy"
 
 persistence:
   enabled: true
@@ -39,12 +42,12 @@ persistence:
   storageClass: gp3
 
 service:
-  type: LoadBalancer        # 외부 노출 
+  type: LoadBalancer
+  port: 80
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "external"
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-  port: 80
 
 resources:
   requests:
@@ -54,7 +57,6 @@ resources:
     cpu: "2"
     memory: "4Gi"
 
-# 초기 관리자 자동 생성 (선택)
 extraEnvVars:
   - name: WEBUI_NAME
     value: "Agentic AI Workshop"
@@ -62,6 +64,7 @@ extraEnvVars:
     value: "user"
   - name: ENABLE_SIGNUP
     value: "true"
+EOF
 ```
 
 배포하기
