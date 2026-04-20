@@ -1,23 +1,5 @@
 ## 벡터DB(Milvus) 설치 ##
 
-### EKS nodegroup 추가 ###
-```
-eksctl create nodegroup \
-  --cluster=my-cluster \
-  --region=ap-northeast-2 \
-  --name=worker-ng \
-  --node-type=m5.large \
-  --nodes=2 \
-  --nodes-min=1 \
-  --nodes-max=5 \
-  --node-volume-size=50 \
-  --node-volume-type=gp3 \
-  --node-private-networking \
-  --node-labels="workload=general" \
-  --managed
-```
-
-
 ### 1. s3 버킷확인 ###
 테라폼에서 milvus 용으로 생성한 버킷 확인한다. 
 ```bash
@@ -37,7 +19,25 @@ echo "MILVUS_ROLE_ARN: ${MILVUS_ROLE_ARN}"
 aws s3 ls | grep ${VECTORDB_BUCKET_NAME}
 ```
 
-### 2. milvus 설치 ###
+
+### 2. EKS nodegroup 추가 ###
+```
+eksctl create nodegroup \
+  --cluster=my-cluster \
+  --region=ap-northeast-2 \
+  --name=worker-ng \
+  --node-type=m5.large \
+  --nodes=2 \
+  --nodes-min=1 \
+  --nodes-max=5 \
+  --node-volume-size=50 \
+  --node-volume-type=gp3 \
+  --node-private-networking \
+  --node-labels="workload=general" \
+  --managed
+```
+
+### 3. milvus 설치 ###
 eks 클러스터에 milvus 를 설치한다.
 ```bash
 helm repo add milvus https://zilliztech.github.io/milvus-helm/
@@ -85,7 +85,7 @@ helm upgrade --install milvus milvus/milvus \
 > helm uninstall milvus -n milvus
 > ```
 
-### 3. milvus 설치 확인 ###
+### 4. milvus 설치 확인 ###
 ```bash
 kubectl get pods -n milvus
 ```
@@ -119,7 +119,4 @@ kill %1
 Handling connection for 19530
 data: [[{'id': 465701590715077047, 'distance': 0.0, 'entity': {}}, {'id': 465701590715077023, 'distance': 17.639362335205078, 'entity': {}}, {'id': 465701590715077049, 'distance': 19.199134826660156, 'entity': {}}, {'id': 465701590715077016, 'distance': 19.371822357177734, 'entity': {}}, {'id': 465701590715077045, 'distance': 19.390382766723633, 'entity': {}}]]
 ```
-
-
-
 
