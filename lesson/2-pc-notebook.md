@@ -1,5 +1,11 @@
 ### [g7e.4xlarge](https://aws.amazon.com/ko/ec2/instance-types/g7e/) 인스턴스 생성 ##
 ```
+aws ssm get-parameter \
+  --name /aws/service/deeplearning/ami/x86_64/base-oss-nvidia-driver-gpu-ubuntu-22.04/latest/ami-id \
+  --region us-east-1 \
+  --query 'Parameter.Value' --output text
+
+
 aws ec2 run-instances \
   --image-id ami-xxxxxxxxxxxxxxxxx \
   --instance-type g7e.4xlarge \
