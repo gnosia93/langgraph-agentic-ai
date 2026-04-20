@@ -113,7 +113,7 @@ Host gpu-dev
 
 ![](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/images/vscode-jupyter-2.png)
 
-### 3. 주피터 노트북 설치하여 접속하기 (Optional) ###
+### 3. 주피터 노트북에 접속하기 (Optional) ###
 ssh 로 로그인 한 후 아래 명령어를 실행하고, 웹 브라우저를 이용하여 해당 서버의 8080 포트로 접속한다. 
 ```
 jupyter lab --ip=0.0.0.0 --port=8080 --no-browser --NotebookApp.token='' --NotebookApp.password=''
