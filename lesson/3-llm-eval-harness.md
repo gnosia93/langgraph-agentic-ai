@@ -45,3 +45,11 @@ eksctl create iamserviceaccount \
   --attach-policy-arn=arn:aws:iam::${ACCOUNT_ID}:policy/LLMEvalBedrockAccess \
   --approve
 ```
+
+### HuggingFace 토큰 (게이트 모델용) ###
+Llama, Gemma 등 승인 필요한 모델은 HF 토큰 시크릿으로 제공:
+```
+kubectl create secret generic hf-token \
+  -n llm-eval \
+  --from-literal=token=$HF_TOKEN
+```
