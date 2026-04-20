@@ -12,6 +12,8 @@ _This workshop is under construction, Not fully implemented yet_
 대상 독자:    
 - EKS 운영 경험이 있고 LLM 서비스를 실전에 도입하려는 엔지니어
 
+### Topics ### 
+
 * [L1. EKS 설치하기](https://github.com/gnosia93/eks-agentic-ai/tree/main/iac/tf)
 
 * [L2. GPU 할당 및 주피터 노트북 설정](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/2-pc-notebook.md)
