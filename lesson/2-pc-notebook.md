@@ -29,7 +29,7 @@ echo "AMI_ID: $AMI_ID"
 echo "SG_ID: $SG_ID"
 echo "PUBLIC_SUBNET_ID: $PUBLIC_SUBNET_ID"
 ```
-
+g7e.4xlarge 인스턴스를 퍼블릭 서브넷에 생성한다. 우분투 22.04 이미지이고 nvidia 드라이버 및 pytroch 환경이 이미 설정되어 있다.
 ```
 aws ec2 run-instances --image-id ${AMI_ID} \
   --instance-type g7e.4xlarge \
@@ -54,26 +54,7 @@ aws ec2 run-instances --image-id ${AMI_ID} \
   ]' 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-vscode 서버에는 이미 Jupyter, pytorch 등의 ML 개발 환경이 모두 설정되어져 있다. 
-
 ### 주피터 노트북 실행하기 ###
-vscode 터미널에서 아래 명령어를 실행한 후, 브라우저의 새창을 띄운후 8080 포트로 접속한다.
 ```
 jupyter lab --ip=0.0.0.0 --port=8080 --no-browser --NotebookApp.token='' --NotebookApp.password=''
 ```
