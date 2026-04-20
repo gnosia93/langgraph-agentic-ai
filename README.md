@@ -90,7 +90,7 @@ _drawn by Nano Banana 2.0 with a rough prompt, Not perfect but it's amazong !_
 
 ## 레퍼런스 ##
 
-* https://www.youtube.com/watch?v=cKSwj_qZ8Jg&list=PLoROMvodv4rPgrvmYbBrxZCK_GwXvDVL3
+* [Alternatives to Attention Mechanism](https://www.youtube.com/watch?v=cKSwj_qZ8Jg&list=PLoROMvodv4rPgrvmYbBrxZCK_GwXvDVL3)
 
 
 
