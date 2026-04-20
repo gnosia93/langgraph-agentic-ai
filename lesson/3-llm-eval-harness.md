@@ -84,7 +84,7 @@ kubectl create secret generic hf-token \
   --from-literal=token=$HF_TOKEN
 ```
 
-### 2. Deployment 다운로드 ###
+### 2. Manifest 다운로드 ###
 ```
 curl -o vllm-eval.yaml \
 https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/eval/vllm-eval.yaml
