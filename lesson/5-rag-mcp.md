@@ -212,7 +212,11 @@ EOF
 
 ```bash
 envsubst < mcp-deployment.yaml | kubectl apply -f -
-kubectl -n rag get pods -w
+
+# rag 네임스페이스의 Pod가 어느 노드에 떴나
+kubectl -n rag get pods -o wide
+# ng-x86-cpu 노드인지 확인
+kubectl get nodes -L workload,eks.amazonaws.com/nodegroup
 ```
 
 ### 5. 테스트 ###
