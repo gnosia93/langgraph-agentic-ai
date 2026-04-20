@@ -105,18 +105,22 @@ if __name__ == "__main__":
     print(json.dumps(result, ensure_ascii=False, indent=2))
 ```
 * 평가 LLM은 평가 대상 모델보다 같거나 더 강한 모델을 써야 한다. (보통 GPT-4, Claude 등)
-* 자기 자신을 평가하면 자기 편향(self-bias)이 생김
-* Pairwise에서 답변 순서를 바꿔서 2번 평가하면 위치 편향(position bias)을 줄일 수 있음
+* "자기 편향(self-bias)"은 같은 모델뿐 아니라 같은 패밀리(예: GPT-4o judge가 GPT-4 답변 선호)에서도 나타난다.
+* Pairwise에서 답변 순서를 바꿔서 2번 평가하면 위치 편향(position bias)을 줄일 수 있다.
+* 길이 편향(Length bias) - Judge는 긴 답을 선호하는 경향이 있다.
+* Judge 자체의 검증 - "golden set 50~200개로 judge와 사람 라벨의 상관관계(Spearman/Cohen's kappa)를 확인"
 
 
 ### 4. 평가 도구 ###
-프로덕션에서는 사용자 요청과 LLM 응답을 로깅하고, 로그중 일부를 샘플링하여 비동기로 백그라운드에서 LLM Judge를 돌리고, 결과를 Prometheus 메트릭으로 수집하는 방식으로 운영.
+프로덕션에서는 사용자 요청과 LLM 응답을 로깅하고, 로그중 일부를 샘플링하여 비동기로 백그라운드에서 LLM Judge를 돌리고, 결과를 Prometheus 메트릭으로 수집하는 방식으로 운영한다.
+* 샘플링 전략: 균등 랜덤 외에 "사용자 피드백이 부정적인 건", "모델이 낮은 logprob으로 답한 건"처럼 weighted sampling을 섞으면 문제 탐지율이 올라간다.
+* 비용 관리: Judge는 비용을 고려해야 함으로 전체의 1~5%만 샘플링하고, 회귀 테스트용 고정 데이터셋(수백 건)은 릴리스마다 100% 돌리는 이중 체계를 유지한다.
 
-* Ragas: RAG 전용 메트릭(faithfulness, answer_relevancy, context_precision 등). Python.
-* DeepEval: pytest-like 인터페이스, G-Eval 구현 포함.
-* OpenAI Evals / promptfoo: 시나리오 기반 회귀 테스트.
-* LangSmith / Langfuse / Arize Phoenix: 트레이싱 + 평가 통합, 대시보드 제공.
-* MT-Bench / AlpacaEval: 사전 정의된 벤치마크 + judge 프롬프트 템플릿.
+- Ragas: RAG 전용 메트릭(faithfulness, answer_relevancy, context_precision 등). Python.
+- DeepEval: pytest-like 인터페이스, G-Eval 구현 포함.
+- OpenAI Evals / promptfoo: 시나리오 기반 회귀 테스트.
+- LangSmith / Langfuse / Arize Phoenix: 트레이싱 + 평가 통합, 대시보드 제공.
+- MT-Bench / AlpacaEval: 사전 정의된 벤치마크 + judge 프롬프트 템플릿.
 
 
 
