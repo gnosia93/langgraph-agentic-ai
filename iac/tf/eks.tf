@@ -115,9 +115,10 @@ resource "aws_eks_node_group" "system" {
   subnet_ids      = aws_subnet.private[*].id
   instance_types  = var.system_node_instance_types
   ami_type        = var.system_node_ami_type
+  disk_size       = 300         # GiB
 
   scaling_config {
-    desired_size = 2
+    desired_size = 3
     max_size     = 4
     min_size     = 2
   }
