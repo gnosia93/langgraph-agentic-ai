@@ -72,8 +72,8 @@ aws ec2 run-instances --image-id ${AMI_ID} \
 > 인스턴스 삭제
 > ```
 > aws ec2 terminate-instances \
-> --region ${AWS_REGION} \
-> --instance-ids $(aws ec2 describe-instances \
+>  --region ${AWS_REGION} \
+>  --instance-ids $(aws ec2 describe-instances \
 >    --filters \
 >      "Name=tag:Name,Values=gpu-dev" \
 >      "Name=instance-state-name,Values=pending,running,stopped,stopping" \
