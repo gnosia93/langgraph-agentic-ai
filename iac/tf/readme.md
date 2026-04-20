@@ -45,7 +45,7 @@ aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
 Added new context arn:aws:eks:ap-northeast-2:499514681453:cluster/eks-agentic-ai to /home/ubuntu/.kube/config
 ```
 
-### 관리용 소프트웨어 설치 ###
+### CLI 도구 설치 ###
 ```
 ARCH=amd64
 curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.33.3/2025-08-03/bin/linux/$ARCH/kubectl
