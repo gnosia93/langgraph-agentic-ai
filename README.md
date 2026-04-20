@@ -25,7 +25,7 @@ _This workshop is under construction, Not fully implemented yet_
 * L6. Agentic AI
    - [Open WebUI 설치](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/6-llm-webui.md)
    - [LangGraph @tool 콜링](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/6-tool-calling.md)   <-- test 필요
-   - [LangFuse 사용하기](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/6-langfuse.md)
+   - [Langfuse 사용하기](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/6-langfuse.md)
 
 * [L7. 에이전트 가드레일 및 보안 강화](https://github.com/gnosia93/agentic-ai-eks/blob/main/lesson/7.guard-rail.md)
    - [입력값 필터링(PII 마스킹 & InputSanitizer)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/7-security-input-filter.md)
