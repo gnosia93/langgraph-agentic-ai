@@ -32,7 +32,7 @@ echo "PUBLIC_SUBNET_ID: $PUBLIC_SUBNET_ID"
 ```
 g7e.4xlarge 인스턴스를 퍼블릭 서브넷에 생성한다. 우분투 22.04 이미지이고 nvidia 드라이버 및 pytroch 환경이 이미 설정되어 있다.
 ```
-aws ec2 run-instances --image-id ${AMI_ID} \
+INSTANCE_ID=$(aws ec2 run-instances --image-id ${AMI_ID} \
   --instance-type ${INSTANCE_TYPE} \
   --key-name ${KEY_NAME} \
   --subnet-id ${PUBLIC_SUBNET_ID} \
@@ -66,7 +66,11 @@ aws ec2 run-instances --image-id ${AMI_ID} \
         {"Key": "Name", "Value": "gpu-dev"}
       ]
     }
-  ]'
+  ]' \
+  --query 'Instances[0].InstanceId' \
+  --output text)
+
+echo "INSTANCE_ID=$INSTANCE_ID"
 ```
 
 > [!TIP]
