@@ -162,3 +162,10 @@ kubectl apply --server-side -f \
 * Ray: 분산 추론용 Ray 클러스터를 LWS로 표현 가능
 * TensorRT-LLM: Triton Inference Server와 조합해 사용
 * SGLang: 멀티노드 서빙 문서에 LWS 언급
+
+### LWS가 적합한 경우 ###
+
+* 70B 이상 대형 모델의 멀티노드 분산 추론
+* 텐서 병렬 + 파이프라인 병렬 조합이 필요한 경우
+* Ray, MPI 같은 head-worker 구조 시스템 위에서 도는 워크로드
+* KubeRay 대신 더 가볍게 Ray를 묶고 싶은 경우
