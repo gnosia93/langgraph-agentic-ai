@@ -86,15 +86,33 @@ kubectl create secret generic hf-token -n llm-eval \
   --from-literal=token=$HF_TOKEN
 ```
 
-### 2. Manifest 다운로드 ###
+### 2. Manifest 다운로드 및 K8S 객체 생성 ###
+eval 디렉토리를 생성하고 서비스와 디플로이먼트를 생성하는 manifest 를 다운로드 한다.
 ```
 mkdir eval && cd eval
 pip install lm-eval
+curl -o vllm-eval.yaml \
+https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/eval/vllm-eval.yaml
+```
+쿠버네티스 객체를 생성한다.
+```
 kubectl create ns llm-eval
 kubectl create serviceaccount llm-eval-sa -n llm-eval
 
-curl -o vllm-eval.yaml \
-https://raw.githubusercontent.com/gnosia93/eks-agentic-ai/refs/heads/main/code/eval/vllm-eval.yaml
+cat << 'EOF' | kubectl apply -f - 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hf-cache-pvc
+  namespace: llm-eval
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gp3
+  resources:
+    requests:
+      storage: 100Gi
+EOF
 ```
 
 ### 3. 모델 테스트 (스크립트) ###
