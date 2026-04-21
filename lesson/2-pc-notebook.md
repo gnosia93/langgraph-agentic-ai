@@ -121,8 +121,17 @@ Host gpu-dev
    
 ![](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/images/vscode-remote-ssh.png)
 
+2. 하단의 엤는 터미널 탭으로 이동하여 아래 명령어를 실행한다.
+```
+echo 'source /opt/pytorch/bin/activate' >> ~/.bashrc
 
-2. `VS Code에서 Jupyter 확장 설치`: 
+source /opt/pytorch/bin/activate
+pip install ipykernel
+python -m ipykernel install --user --name pytorch --display-name "Python (pytorch)"
+jupyter kernelspec list
+``` 
+
+3. `VS Code에서 Jupyter 확장 설치`: 
    Extensions 탭 → "Jupyter" 검색 → Install in SSH
 
 3. `노트북 파일 생성`: 
