@@ -34,7 +34,7 @@ _Drawn using Nano Banana 2.0 with a rough prompt, Not perfect but it's amazing !
    - [벡터DB 구축 (Milvus on EKS)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/5-milvus-install.md)
    - [문서 처리 파이프라인 (레이아웃 파싱 → 청킹 → 임베딩)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/5-pdf-save.md)
    - [RAG 백엔드 구현 (검색 → 리랭킹 → 답변 생성)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/5-llm-call.md)
-   - [MCP 서버로 배포 (EKS)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/5-rag-mcp.md)
+   - [MCP 서버로 배포 (EKS)](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/5-rag-mcp.md)   <--- test 필요
          
 * [L6. LangGraph로 Agentic AI 만들기](https://github.com/gnosia93/langgraph-agentic-ai/blob/main/lesson/6-agentic-ai.md)
    - [Open WebUI 설치](https://github.com/gnosia93/eks-agentic-ai/blob/main/lesson/6-llm-webui.md)
