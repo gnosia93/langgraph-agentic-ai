@@ -68,11 +68,11 @@ Reason:  "이제 답변하기에 충분하다"
   5. 필요하면 후속 검색 (인용 논문 추적)
   6. 요약 + 출처 정리해서 답변
 ```
+### [1. 주피터 설정] ###
 
+### [2. @tool 콜링](https://github.com/gnosia93/langgraph-agentic-ai/blob/main/lesson/6-tool-calling.md) ###
 
-### [1. @tool 콜링](https://github.com/gnosia93/langgraph-agentic-ai/blob/main/lesson/6-tool-calling.md) ###
-
-### 2. 상태와 메모리 ###
+### 3. 상태와 메모리 ###
   - LangGraph State: 그래프 전체에서 공유되는 상태
   - 단기 메모리: 대화 컨텍스트 (MessagesState)
   - 장기 메모리: 사용자 프로필, 선호도 (외부 저장소)
