@@ -1,3 +1,5 @@
+RayCluster, RayService, RayJob 같은 CRD를 제공하는데 이걸 쓰면 Ray 클러스터 자체를 쿠버네티스 리소스처럼 선언적으로 관리할 수 있다.
+
 ```
 apiVersion: ray.io/v1
 kind: RayService
