@@ -88,7 +88,7 @@ replicaset.apps/lws-controller-manager-567cc75d78   2         2         2       
 #### 배포 전 확인사항 ####
 * hf-token Secret 생성됨 (kubectl create secret generic hf-token --from-literal=token=hf_xxx)
 * llama-405b-cache PVC 준비됨 (최소 1TB, FSx Lustre 강력 추천)
-* p5.48xlarge 노드 2대 확보 (Capacity Block 또는 Reserved)
+* g7e.48xlarge 또는 p5.48xlarge 노드 2대 확보 (NVLink 를 지원하는 p5 시리즈 선호)
 * 두 노드 같은 placement group 소속
 * EFA device plugin 설치됨
 *  NVIDIA device plugin 설치됨
