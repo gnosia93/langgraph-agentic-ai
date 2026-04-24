@@ -75,53 +75,74 @@ resource "aws_security_group_rule" "fsx_to_eks_1018_1023" {
 # FSx for Lustre File System
 # ---------------------------------------------------
 resource "aws_fsx_lustre_file_system" "this" {
-  storage_capacity                = var.storage_capacity
-  subnet_ids                      = [var.subnet_id]
+  storage_capacity                = "2400"           # FSx storage in GiB (PERSISTENT_2 min 1200, multiples of 1200)
+  subnet_ids                      = [aws_subnet.private[0].id]   # private subnet 첫 번째
   security_group_ids              = [aws_security_group.fsx_lustre.id]
-  deployment_type                 = var.deployment_type
-  per_unit_storage_throughput     = var.throughput_per_unit
-  file_system_type_version        = var.lustre_version
-  data_compression_type           = var.data_compression
-  automatic_backup_retention_days = 0
+  deployment_type                 = "PERSISTENT_2"
+  per_unit_storage_throughput     = "1000"
+  file_system_type_version        = "2.15"
+  data_compression_type           = "LZ4"
   storage_type                    = "SSD"
+  automatic_backup_retention_days = 0
 
-  # S3 연동 (선택)
-  dynamic "log_configuration" {
-    for_each = []  # 필요 시 로깅 설정
-    content {
-      level = "WARN_ERROR"
-    }
-  }
-
-  tags = merge(var.tags, {
-    Name = var.fsx_name
-  })
-
-  lifecycle {
-    ignore_changes = [
-      # S3 import path는 생성 후 수정 불가
-      # 의도적 재생성 방지
-    ]
+  tags = {
+    Name    = "eai-fsx"
+    Cluster = "eks-agentic-ai"
   }
 }
 
-# S3 Data Repository Association (선택)
-resource "aws_fsx_data_repository_association" "s3_import" {
-  count = var.s3_import_path != null ? 1 : 0
+# ---------- Outputs ----------
+output "fsx_id" {
+  value = aws_fsx_lustre_file_system.llama_cache.id
+}
 
-  file_system_id       = aws_fsx_lustre_file_system.this.id
-  data_repository_path = var.s3_import_path
-  file_system_path     = "/s3data"
-  batch_import_meta_data_on_create = true
+output "fsx_dns_name" {
+  value = aws_fsx_lustre_file_system.llama_cache.dns_name
+}
 
-  s3 {
-    auto_export_policy {
-      events = var.s3_export_path != null ? ["NEW", "CHANGED", "DELETED"] : []
-    }
-    auto_import_policy {
-      events = ["NEW", "CHANGED", "DELETED"]
-    }
-  }
+output "fsx_mount_name" {
+  value = aws_fsx_lustre_file_system.llama_cache.mount_name
+}
 
-  tags = var.tags
+output "fsx_security_group_id" {
+  value = aws_security_group.fsx_lustre.id
+}
+
+# kubectl apply 해서 바로 쓸 수 있는 PV/PVC 매니페스트
+output "fsx_pv_manifest" {
+  value = <<-EOT
+    ---
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: ${var.fsx_name}-pv
+    spec:
+      capacity:
+        storage: ${var.fsx_storage_capacity}Gi
+      accessModes:
+        - ReadWriteMany
+      mountOptions:
+        - flock
+      persistentVolumeReclaimPolicy: Retain
+      csi:
+        driver: fsx.csi.aws.com
+        volumeHandle: ${aws_fsx_lustre_file_system.llama_cache.id}
+        volumeAttributes:
+          dnsname: ${aws_fsx_lustre_file_system.llama_cache.dns_name}
+          mountname: ${aws_fsx_lustre_file_system.llama_cache.mount_name}
+    ---
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: ${var.fsx_name}
+      namespace: llm-serving
+    spec:
+      accessModes:
+        - ReadWriteMany
+      storageClassName: ""
+      volumeName: ${var.fsx_name}-pv
+      resources:
+        requests:
+          storage: ${var.fsx_storage_capacity}Gi
+  EOT
 }
