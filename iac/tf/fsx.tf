@@ -115,10 +115,10 @@ output "fsx_pv_manifest" {
     apiVersion: v1
     kind: PersistentVolume
     metadata:
-      name: ${var.fsx_name}-pv
+      name: llama-405b-cache-pv
     spec:
       capacity:
-        storage: ${var.fsx_storage_capacity}Gi
+        storage: ${aws_fsx_lustre_file_system.llama_cache.storage_capacity}Gi
       accessModes:
         - ReadWriteMany
       mountOptions:
@@ -134,15 +134,15 @@ output "fsx_pv_manifest" {
     apiVersion: v1
     kind: PersistentVolumeClaim
     metadata:
-      name: ${var.fsx_name}
+      name: llama-405b-cache
       namespace: llm-serving
     spec:
       accessModes:
         - ReadWriteMany
       storageClassName: ""
-      volumeName: ${var.fsx_name}-pv
+      volumeName: llama-405b-cache-pv
       resources:
         requests:
-          storage: ${var.fsx_storage_capacity}Gi
+          storage: ${aws_fsx_lustre_file_system.llama_cache.storage_capacity}Gi
   EOT
 }
