@@ -103,16 +103,16 @@ spec:
     type: RollingUpdate
     rollingUpdateConfiguration:
       maxUnavailable: 0
-      maxSurge: 1                      # 업데이트 중에 replicas를 초과해서 임시로 추가 생성할 수 있는 그룹의 최대 개수
+      maxSurge: 1                                # 업데이트 중에 replicas를 초과해서 임시로 추가 생성할 수 있는 그룹의 최대 개수
   leaderWorkerTemplate:
-    size: 2
-    restartPolicy: RecreateGroupOnPodRestart
+    size: 2                                      # Leader 1, Worker 1 
+    restartPolicy: RecreateGroupOnPodRestart     # 그룹 안의 파드 하나가 죽으면, 그룹 전체를 재생성하라 는 정책
     leaderTemplate:
       metadata:
         labels:
           role: leader
       spec:
-        terminationGracePeriodSeconds: 120
+        terminationGracePeriodSeconds: 120       # 파드를 종료할 때 얼마나 기다려줄지를 초 단위로 지정합니다. 여기선 120초 (2분).
         nodeSelector:
           node.kubernetes.io/instance-type: p5.48xlarge
         containers:
