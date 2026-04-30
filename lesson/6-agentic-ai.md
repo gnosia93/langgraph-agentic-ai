@@ -116,6 +116,24 @@ langgraph-agentic-workshop/
 └── slides/                   # 모듈별 요약 슬라이드
 ```
 
+```
+## 필수 설치
+- Python 3.12 (uv 권장)
+- Docker Desktop
+- VS Code 또는 Cursor
+- Git
+
+## 계정
+- OpenAI API 키 (최소 $5 크레딧)
+- LangSmith 계정 (langchain.com에서 가입, 무료)
+
+## 사전 실행
+git clone <repo>
+cd langgraph-agentic-workshop
+uv sync
+python setup/preflight.py
+
+```
 
 ### [1. 주피터 설정] ###
 
