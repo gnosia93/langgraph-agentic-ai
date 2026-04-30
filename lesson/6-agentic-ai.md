@@ -88,8 +88,32 @@ CI에서 평가 실패 시 PR을 블록하는 패턴
 도구 권한 최소화
 타임아웃·재시도 정책
 민감 정보 마스킹
+```
 
-
+```
+langgraph-agentic-workshop/
+├── README.md
+├── pyproject.toml
+├── .env.example
+├── setup/
+│   └── preflight.py          # 환경 점검 스크립트
+├── modules/
+│   ├── m1_basics/
+│   │   ├── 01_echo_graph.py
+│   │   ├── 02_two_nodes.py
+│   │   └── solution/
+│   ├── m2_tools_hitl/
+│   ├── m3_supervisor/
+│   ├── m4_swarm/
+│   ├── m5_platform/
+│   │   ├── langgraph.json
+│   │   ├── my_agent/
+│   │   └── auth_server/
+│   └── m6_observability/
+│       └── datasets/
+├── docker/
+│   └── docker-compose.yml    # Postgres + LangGraph
+└── slides/                   # 모듈별 요약 슬라이드
 ```
 
 
