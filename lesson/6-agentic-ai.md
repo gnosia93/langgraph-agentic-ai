@@ -132,7 +132,7 @@ python setup/preflight.py
 
 ```
 
-### [Module 1. LangGraph 기본기](https://github.com/gnosia93/lg-agentic-ai/blob/main/lesson/langgraph/m1-langgraph-basic.md) ###
+### [m1. LangGraph 기본기](https://github.com/gnosia93/lg-agentic-ai/blob/main/lesson/langgraph/m1-langgraph-basic.md) ###
 
 ### [2. @tool 콜링](https://github.com/gnosia93/langgraph-agentic-ai/blob/main/lesson/6-tool-calling.md) ###
 
