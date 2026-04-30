@@ -64,7 +64,7 @@ graph.invoke({"input_text": "hello"})
 ```
 
 
-### 4. 실습 시나리오 ###
+### 4. 실습 ###
 영어 원문을 받아서 → translate 노드가 한국어로 번역 → summarize 노드가 한 줄 요약 → 최종 상태 반환.
 ```
 """
@@ -114,3 +114,25 @@ if __name__ == "__main__":
     for k, v in result.items():
         print(f"[{k}]\n{v}\n")
 ```
+
+### 5. 정리 ###
+#### 이번 모듈의 핵심 세 가지 ####
+* State는 설계의 출발점이다. 어떤 필드가 흘러다녀야 하는지 먼저 그리면 노드가 자연스럽게 따라온다.
+* Node는 "상태의 변경분"만 반환한다. 전체 상태를 다시 만들 필요가 없다.
+* 리듀서가 없으면 덮어쓰기, 있으면 병합이다. 대화 메시지처럼 누적이 필요하면 add_messages.
+
+#### messages 상태로 바꿔 보기 ####
+
+2-노드 파이프라인의 State를 아래처럼 메시지 리스트 기반으로 바꿔서, translate와 summarize 결과가 대화 형태로 누적되도록 만들어 본다. add_messages 리듀서의 효과를 직접 체감할 수 있다.
+
+```
+from typing import Annotated
+from langgraph.graph.message import add_messages
+from langchain_core.messages import BaseMessage
+
+class State(TypedDict):
+    messages: Annotated[list[BaseMessage], add_messages]
+```
+
+#### stream vs invoke ####
+두 방식으로 돌려보고 출력이 어떻게 다른지 비교. stream_mode를 "values", "updates", "messages"로 바꾸면서 차이 관찰.
