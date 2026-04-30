@@ -144,7 +144,4 @@ python setup/preflight.py
 
 ### [7. Open WebUI 연동](https://github.com/gnosia93/langgraph-agentic-ai/blob/main/lesson/6-llm-webui.md) ###
  
-### 2. RAG를 에이전트 도구로 (L5와 연결) ###
-  - L5에서 만든 RAG를 @tool로 감싸기
-  - 에이전트가 "검색이 필요한지" 스스로 판단
-  - 실습: 질문에 따라 RAG 쓸지 말지 결정하는 에이전트
+
