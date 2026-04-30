@@ -30,7 +30,7 @@ class State(TypedDict):
     input_text: str
     output_text: str
 ```
-#### Node — 상태를 바꾸는 함수 ####
+#### `Node` — 상태를 바꾸는 함수 ####
 시그니처는 (state) -> dict. 반환한 dict가 상태에 병합된다. 반환하지 않은 키는 그대로 유지된다.
 ```
 def upper_node(state: State) -> dict:
