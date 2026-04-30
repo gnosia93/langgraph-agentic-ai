@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
 #### messages 상태로 바꿔 보기 ####
 
-2-노드 파이프라인의 State를 아래처럼 메시지 리스트 기반으로 바꿔서, translate와 summarize 결과가 대화 형태로 누적되도록 만들어 본다. add_messages 리듀서의 효과를 직접 체감할 수 있다.
+노드 파이프라인의 State를 아래처럼 메시지 리스트 기반으로 바꿔서, translate와 summarize 결과가 대화 형태로 누적되도록 만들어 본다. add_messages 리듀서의 효과를 직접 체감할 수 있다.
 
 ```
 from typing import Annotated
