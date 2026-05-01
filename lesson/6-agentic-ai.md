@@ -18,20 +18,6 @@
 ---
 각 모듈 상세
 ```
-M3. 멀티 에이전트 — Supervisor 패턴 (75분)
-목표: 역할 분담이 필요한 시스템을 Supervisor로 조율한다.
-
-Supervisor의 기본 아이디어: 한 명의 LLM 라우터가 하위 에이전트를 지휘
-langgraph-supervisor 라이브러리 사용
-하위 에이전트가 끝나면 Supervisor로 복귀하는 제어 흐름
-Supervisor 자체 프롬프트 설계 요령
-실습 3-1: 세 개의 전문가 에이전트 조합
-
-researcher — 웹/DB 조회 도구 사용
-coder — Python REPL 도구 사용
-writer — 최종 보고서 작성
-supervisor — 사용자의 질문을 보고 누구에게 맡길지 결정
-시나리오: "최근 1주간 EC2 c7g 인스턴스 가격 변동을 조사해 파이썬으로 그래프를 그리고 보고서로 정리해 줘."
 
 M4. Swarm 패턴 (60분)
 목표: Supervisor 없이 에이전트끼리 직접 핸드오프하는 패턴을 이해한다.
